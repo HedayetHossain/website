@@ -91,6 +91,15 @@
             color: var(--dark-color);
         }
         
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
         .payment-modal {
             display: none;
             position: fixed;
@@ -258,11 +267,72 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="#"><i class="fas fa-address-book me-2"></i>Contact Manager</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
+    <!-- Login/Signup Container -->
+    <div class="container" id="authContainer">
+        <div class="login-container">
+            <h2 class="text-center mb-4">Welcome</h2>
+            <ul class="nav nav-tabs" id="authTabs">
+                <li class="nav-item">
+                    <a class="nav-link active" id="signin-tab" data-bs-toggle="tab" href="#signin">Sign In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="signup-tab" data-bs-toggle="tab" href="#signup">Sign Up</a>
+                </li>
+            </ul>
+            <div class="tab-content p-3 border border-top-0 rounded-bottom">
+                <div class="tab-pane fade show active" id="signin">
+                    <form id="signinForm">
+                        <div class="mb-3">
+                            <label for="signinEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="signinEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signinPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="signinPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="signup">
+                    <form id="signupForm">
+                        <div class="mb-3">
+                            <label for="signupName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="signupName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="signupEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="signupPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Application Container -->
-    <div class="container mt-4" id="appContainer">
+    <div class="container mt-4" id="appContainer" style="display: none;">
         <div class="row">
             <div class="col-md-12">
                 <h1 class="text-center mb-4">Contact Information Manager</h1>
@@ -530,40 +600,6 @@
                                     <label for="snapchat" class="form-label"><i class="fab fa-snapchat social-media-icons text-warning"></i>Snapchat</label>
                                         <input type="text" class="form-control" id="snapchat">
                                 </div>
-                                
-                                <!-- Additional Instant Messaging Platforms -->
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="signal" class="form-label"><i class="fas fa-comment social-media-icons text-primary"></i>Signal</label>
-                                        <input type="text" class="form-control" id="signal">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="discord" class="form-label"><i class="fab fa-discord social-media-icons text-indigo"></i>Discord</label>
-                                        <input type="text" class="form-control" id="discord">
-                                    </div>
-                                </div>
-                                
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="skype" class="form-label"><i class="fab fa-skype social-media-icons text-info"></i>Skype</label>
-                                        <input type="text" class="form-control" id="skype">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="line" class="form-label"><i class="fab fa-line social-media-icons text-success"></i>Line</label>
-                                        <input type="text" class="form-control" id="line">
-                                    </div>
-                                </div>
-                                
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="kik" class="form-label"><i class="fas fa-comment-alt social-media-icons text-purple"></i>Kik</label>
-                                        <input type="text" class="form-control" id="kik">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="threema" class="form-label"><i class="fas fa-shield-alt social-media-icons text-dark"></i>Threema</label>
-                                        <input type="text" class="form-control" id="threema">
-                                    </div>
-                                </div>
                             </div>
                             
                             <!-- Social Media -->
@@ -606,51 +642,6 @@
                                 <div class="mb-3">
                                     <label for="freelancer" class="form-label"><i class="fas fa-laptop-code social-media-icons text-info"></i>Freelancer</label>
                                     <input type="url" class="form-control" id="freelancer">
-                                </div>
-                                
-                                <!-- Additional Social Media Platforms -->
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="tiktok" class="form-label"><i class="fab fa-tiktok social-media-icons text-dark"></i>TikTok</label>
-                                        <input type="url" class="form-control" id="tiktok">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="pinterest" class="form-label"><i class="fab fa-pinterest social-media-icons text-danger"></i>Pinterest</label>
-                                        <input type="url" class="form-control" id="pinterest">
-                                    </div>
-                                </div>
-                                
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="reddit" class="form-label"><i class="fab fa-reddit social-media-icons text-orange"></i>Reddit</label>
-                                        <input type="url" class="form-control" id="reddit">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="tumblr" class="form-label"><i class="fab fa-tumblr social-media-icons text-secondary"></i>Tumblr</label>
-                                        <input type="url" class="form-control" id="tumblr">
-                                    </div>
-                                </div>
-                                
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="github" class="form-label"><i class="fab fa-github social-media-icons text-dark"></i>GitHub</label>
-                                        <input type="url" class="form-control" id="github">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="dribbble" class="form-label"><i class="fab fa-dribbble social-media-icons text-pink"></i>Dribbble</label>
-                                        <input type="url" class="form-control" id="dribbble">
-                                    </div>
-                                </div>
-                                
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="behance" class="form-label"><i class="fab fa-behance social-media-icons text-blue"></i>Behance</label>
-                                        <input type="url" class="form-control" id="behance">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="medium" class="form-label"><i class="fab fa-medium social-media-icons text-dark"></i>Medium</label>
-                                        <input type="url" class="form-control" id="medium">
-                                    </div>
                                 </div>
                             </div>
                             
@@ -764,745 +755,727 @@
         let fileHeaders = [];
         
         // DOM elements
+        const authContainer = document.getElementById('authContainer');
         const appContainer = document.getElementById('appContainer');
+        const signinForm = document.getElementById('signinForm');
+        const signupForm = document.getElementById('signupForm');
+        const logoutBtn = document.getElementById('logoutBtn');
         const fileUpload = document.getElementById('fileUpload');
         const uploadBtn = document.getElementById('uploadBtn');
-        const downloadTemplateBtn = document.getElementById('downloadTemplateBtn');
         const uploadStatus = document.getElementById('uploadStatus');
         const fileInfo = document.getElementById('fileInfo');
         const fileDetails = document.getElementById('fileDetails');
         const debugInfo = document.getElementById('debugInfo');
         const debugDetails = document.getElementById('debugDetails');
-        const contactId = document.getElementById('contactId');
-        const decreaseIdBtn = document.getElementById('decreaseIdBtn');
-        const increaseIdBtn = document.getElementById('increaseIdBtn');
+        const contactForm = document.getElementById('contactForm');
         const fetchDataBtn = document.getElementById('fetchDataBtn');
+        const contactId = document.getElementById('contactId');
+        const increaseIdBtn = document.getElementById('increaseIdBtn');
+        const decreaseIdBtn = document.getElementById('decreaseIdBtn');
         const imageUpload = document.getElementById('imageUpload');
         const imagePreview = document.getElementById('imagePreview');
-        const contactForm = document.getElementById('contactForm');
         const countryPersonal = document.getElementById('countryPersonal');
         const countryWork = document.getElementById('countryWork');
         const downloadCsvBtn = document.getElementById('downloadCsvBtn');
         const downloadVcfBtn = document.getElementById('downloadVcfBtn');
         const downloadQrBtn = document.getElementById('downloadQrBtn');
         const paymentBtn = document.getElementById('paymentBtn');
-        const qrCodeContainer = document.getElementById('qrCodeContainer');
-        const qrcode = document.getElementById('qrcode');
-        const saveQrBtn = document.getElementById('saveQrBtn');
         const paymentModal = document.getElementById('paymentModal');
         const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
         const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
+        const qrCodeContainer = document.getElementById('qrCodeContainer');
+        const downloadTemplateBtn = document.getElementById('downloadTemplateBtn');
+        const saveQrBtn = document.getElementById('saveQrBtn');
         const scrollToTopBtn = document.getElementById('scrollToTopBtn');
         const scrollToBottomBtn = document.getElementById('scrollToBottomBtn');
-
+        
+        // Field mapping for different naming conventions - FIXED VERSION
+        const fieldMappings = {
+        // ID fields
+    'id': ['ID', 'Id', 'id', 'ContactID', 'Contact Id', 'Contact ID', 'ContactID', 'CONTACTID'],
+            
+           // Personal Information
+    'firstName': ['FirstName', 'First Name', 'First_Name', 'firstname', 'first name', 'fname', 'FName', 'FIRSTNAME', 'Given Name', 'GivenName'],
+    'middleName': ['MiddleName', 'Middle Name', 'Middle_Name', 'middlename', 'middle name', 'mname', 'MName', 'MIDDLENAME'],
+    'lastName': ['LastName', 'Last Name', 'Last_Name', 'lastname', 'last name', 'lname', 'LName', 'LASTNAME', 'Surname', 'Family Name'],
+    'nickName': ['NickName', 'Nick Name', 'Nick_Name', 'nickname', 'nick name', 'nick', 'Nick', 'NICKNAME'],
+    'phoneHome': ['PhoneHome', 'Phone Home', 'Phone_Home', 'phonehome', 'home phone', 'homephone', 'HomePhone', 'HOME_PHONE', 'Home', 'Home Tel'],
+    'phoneMobile': ['PhoneMobile', 'Phone Mobile', 'Phone_Mobile', 'phonemobile', 'mobile phone', 'mobile', 'cell', 'cellphone', 'Mobile', 'MobilePhone', 'MOBILE', 'Cell Phone'],
+    'emailPersonal': ['EmailPersonal', 'Email Personal', 'Email_Personal', 'emailpersonal', 'personal email', 'email', 'Email', 'EMAIL', 'Personal Email'],
+    'dob': ['DateOfBirth', 'Date of Birth', 'Date_of_Birth', 'dob', 'birthdate', 'birth date', 'DOB', 'Birthday'],
+    'street1Personal': ['Street1Personal', 'Street 1 Personal', 'Street1 Personal', 'street1personal', 'personal street1', 'address1', 'Address1', 'Street1', 'Street 1'],
+    'street2Personal': ['Street2Personal', 'Street 2 Personal', 'Street2 Personal', 'street2personal', 'personal street2', 'address2', 'Address2', 'Street2', 'Street 2'],
+    'cityPersonal': ['CityPersonal', 'City Personal', 'City_Personal', 'citypersonal', 'personal city', 'city', 'City', 'CITY'],
+    'zipPersonal': ['ZipPersonal', 'ZIP Personal', 'Zip_Personal', 'zippersonal', 'personal zip', 'zip', 'postal code', 'Zip', 'ZIP', 'PostalCode', 'Postal Code'],
+    'countryPersonal': ['CountryPersonal', 'Country Personal', 'Country_Personal', 'countrypersonal', 'personal country', 'country', 'Country', 'COUNTRY'],
+    
+    // Work Information
+    'company': ['Company', 'company', 'employer', 'Employer', 'COMPANY', 'Organization'],
+    'department': ['Department', 'department', 'dept', 'Dept', 'DEPARTMENT'],
+    'designation': ['Designation', 'designation', 'title', 'Title', 'Job Title', 'JobTitle', 'DESIGNATION'],
+    'role': ['Role', 'role', 'position', 'Position', 'ROLE'],
+    'phoneWork': ['PhoneWork', 'Phone Work', 'Phone_Work', 'phonework', 'work phone', 'workphone', 'WorkPhone', 'WORK_PHONE', 'Office Phone'],
+    'emailWork': ['EmailWork', 'Email Work', 'Email_Work', 'emailwork', 'work email', 'work email', 'WorkEmail', 'WORK_EMAIL', 'Office Email'],
+    'street1Work': ['Street1Work', 'Street 1 Work', 'Street1 Work', 'street1work', 'work street1', 'work address1', 'WorkAddress1', 'Work Street1'],
+    'street2Work': ['Street2Work', 'Street 2 Work', 'Street2 Work', 'street2work', 'work street2', 'work address2', 'WorkAddress2', 'Work Street2'],
+    'cityWork': ['CityWork', 'City Work', 'City_Work', 'citywork', 'work city', 'WorkCity'],
+    'zipWork': ['ZipWork', 'ZIP Work', 'Zip_Work', 'zipwork', 'work zip', 'work postal code', 'WorkZip'],
+    'countryWork': ['CountryWork', 'Country Work', 'Country_Work', 'countrywork', 'work country', 'WorkCountry'],
+    'webAddress': ['WebAddress', 'Web Address', 'Web_Address', 'webaddress', 'website', 'Website', 'URL', 'Web'],
+    
+    // Instant Messaging
+    'whatsapp': ['WhatsApp', 'Whatsapp', 'whatsapp', 'WA', 'WHATSAPP'],
+    'waBusiness': ['WABusiness', 'WA Business', 'WA_Business', 'wabusiness', 'whatsapp business', 'WhatsApp Business'],
+    'imo': ['Imo', 'imo', 'IMO'],
+    'viber': ['Viber', 'viber', 'VIBER'],
+    'twitter': ['Twitter', 'twitter', 'TWITTER'],
+    'messenger': ['Messenger', 'messenger', 'fb messenger', 'Facebook Messenger'],
+    'wechat': ['WeChat', 'Wechat', 'wechat', 'WECHAT'],
+    'telegram': ['Telegram', 'telegram', 'TELEGRAM'],
+    'snapchat': ['Snapchat', 'snapchat', 'SNAPCHAT'],
+    
+    // Social Media
+    'facebook': ['Facebook', 'facebook', 'fb', 'FACEBOOK'],
+    'linkedin': ['LinkedIn', 'Linkedin', 'linkedin', 'LINKEDIN'],
+    'instagram': ['Instagram', 'instagram', 'insta', 'INSTAGRAM'],
+    'youtube': ['YouTube', 'Youtube', 'youtube', 'yt', 'YOUTUBE'],
+    'fiverr': ['Fiverr', 'fiverr', 'FIVERR'],
+    'upwork': ['Upwork', 'upwork', 'UPWORK'],
+    'freelancer': ['Freelancer', 'freelancer', 'FREELANCER']
+};
+        
         // Initialize the application
-        function init() {
-            // Populate country dropdowns
-            populateCountries();
-            
-            // Set up event listeners
-            setupEventListeners();
-            
-            // Load sample data
-            loadSampleData();
+       // IMPROVED function to find field value in record using multiple possible field names
+function findFieldValue(record, fieldKey) {
+    const possibleNames = fieldMappings[fieldKey];
+    if (!possibleNames) {
+        console.log(`No mapping found for field: ${fieldKey}`);
+        return '';
+    }
+    
+    // First, try exact matches with case insensitivity
+    for (const name of possibleNames) {
+        // Check if the field exists in the record (case insensitive)
+        const recordKeys = Object.keys(record);
+        const matchingKey = recordKeys.find(key => 
+            key.toLowerCase().replace(/\s+/g, '') === name.toLowerCase().replace(/\s+/g, '')
+        );
+        
+        if (matchingKey && record[matchingKey] !== null && record[matchingKey] !== undefined && record[matchingKey] !== '') {
+            console.log(`Found field ${fieldKey} as "${matchingKey}": ${record[matchingKey]}`);
+            return record[matchingKey];
         }
-
-        // Populate country dropdowns
-        function populateCountries() {
-            countries.forEach(country => {
-                const option1 = document.createElement('option');
-                option1.value = country;
-                option1.textContent = country;
-                countryPersonal.appendChild(option1);
-                
-                const option2 = document.createElement('option');
-                option2.value = country;
-                option2.textContent = country;
-                countryWork.appendChild(option2);
-            });
+    }
+    
+    // If no exact match, try partial matching
+    for (const name of possibleNames) {
+        const normalizedName = name.toLowerCase().replace(/\s+/g, '');
+        const recordKeys = Object.keys(record);
+        const matchingKey = recordKeys.find(key => 
+            key.toLowerCase().replace(/\s+/g, '').includes(normalizedName) || 
+            normalizedName.includes(key.toLowerCase().replace(/\s+/g, ''))
+        );
+        
+        if (matchingKey && record[matchingKey] !== null && record[matchingKey] !== undefined && record[matchingKey] !== '') {
+            console.log(`Found field ${fieldKey} as partial match "${matchingKey}": ${record[matchingKey]}`);
+            return record[matchingKey];
         }
+    }
+    
+    console.log(`Field not found: ${fieldKey}`);
+    return '';
+}
 
-        // Set up event listeners
-        function setupEventListeners() {
-            // File upload
-            uploadBtn.addEventListener('click', handleFileUpload);
-            downloadTemplateBtn.addEventListener('click', downloadTemplate);
+// IMPROVED function to fetch data from uploaded file
+function fetchDataFromFile() {
+    const id = contactId.value.trim();
+    if (!id) {
+        alert('Please enter a Contact ID');
+        return;
+    }
+    
+    if (uploadedData.length === 0) {
+        alert('No data available. Please upload a file first.');
+        return;
+    }
+    
+    console.log('Looking for ID:', id);
+    console.log('Available data headers:', fileHeaders);
+    console.log('First record:', uploadedData[0]);
+    
+    // Find record by ID using multiple possible ID field names
+    let record = null;
+    const idFields = fieldMappings.id;
+    
+    for (const recordItem of uploadedData) {
+        for (const idField of idFields) {
+            // Case insensitive search for ID field
+            const recordKeys = Object.keys(recordItem);
+            const matchingKey = recordKeys.find(key => 
+                key.toLowerCase().replace(/\s+/g, '') === idField.toLowerCase().replace(/\s+/g, '')
+            );
             
-            // Contact ID controls
-            decreaseIdBtn.addEventListener('click', () => changeContactId(-1));
-            increaseIdBtn.addEventListener('click', () => changeContactId(1));
-            fetchDataBtn.addEventListener('click', fetchDataFromFile);
-            
-            // Image preview
-            imageUpload.addEventListener('change', handleImagePreview);
-            
-            // Form submission
-            contactForm.addEventListener('submit', handleFormSubmit);
-            
-            // Download buttons
-            downloadCsvBtn.addEventListener('click', downloadCsv);
-            downloadVcfBtn.addEventListener('click', downloadVcf);
-            downloadQrBtn.addEventListener('click', generateQrCode);
-            saveQrBtn.addEventListener('click', saveQrCode);
-            
-            // Payment
-            paymentBtn.addEventListener('click', () => paymentModal.style.display = 'flex');
-            cancelPaymentBtn.addEventListener('click', () => paymentModal.style.display = 'none');
-            confirmPaymentBtn.addEventListener('click', processPayment);
-            
-            // Scroll buttons
-            scrollToTopBtn.addEventListener('click', scrollToTop);
-            scrollToBottomBtn.addEventListener('click', scrollToBottom);
-            window.addEventListener('scroll', toggleScrollButtons);
-        }
-
-        // Load sample data for demonstration
-        function loadSampleData() {
-            document.getElementById('firstName').value = 'John';
-            document.getElementById('lastName').value = 'Doe';
-            document.getElementById('phoneMobile').value = '+1234567890';
-            document.getElementById('emailPersonal').value = 'john.doe@example.com';
-            document.getElementById('company').value = 'Tech Solutions Inc.';
-            document.getElementById('designation').value = 'Software Engineer';
-            document.getElementById('whatsapp').value = '+1234567890';
-            document.getElementById('facebook').value = 'https://facebook.com/johndoe';
-            document.getElementById('linkedin').value = 'https://linkedin.com/in/johndoe';
-        }
-
-        // Handle file upload
-        function handleFileUpload() {
-            const file = fileUpload.files[0];
-            if (!file) {
-                showStatus('Please select a file to upload.', 'danger');
-                return;
-            }
-            
-            const fileExtension = file.name.split('.').pop().toLowerCase();
-            
-            if (fileExtension === 'csv') {
-                parseCsvFile(file);
-            } else if (fileExtension === 'xlsx' || fileExtension === 'xls') {
-                parseExcelFile(file);
-            } else {
-                showStatus('Please upload a CSV or Excel file.', 'danger');
+            if (matchingKey && recordItem[matchingKey] && recordItem[matchingKey].toString().trim() === id.toString().trim()) {
+                record = recordItem;
+                console.log('Found record with ID field:', matchingKey, record);
+                break;
             }
         }
-
-        // Parse CSV file
-        function parseCsvFile(file) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                const content = e.target.result;
-                const lines = content.split('\n');
-                
-                if (lines.length === 0) {
-                    showStatus('The file is empty.', 'danger');
-                    return;
-                }
-                
-                // Extract headers
-                fileHeaders = lines[0].split(',').map(header => header.trim());
-                
-                // Extract data
-                uploadedData = [];
-                for (let i = 1; i < lines.length; i++) {
-                    if (lines[i].trim() === '') continue;
-                    
-                    const values = lines[i].split(',').map(value => value.trim());
-                    const row = {};
-                    
-                    fileHeaders.forEach((header, index) => {
-                        row[header] = values[index] || '';
-                    });
-                    
-                    uploadedData.push(row);
-                }
-                
-                showFileInfo(file, uploadedData.length);
-                showStatus(`Successfully uploaded ${uploadedData.length} contacts from CSV file.`, 'success');
-            };
-            
-            reader.onerror = function() {
-                showStatus('Error reading the file.', 'danger');
-            };
-            
-            reader.readAsText(file);
-        }
-
-        // Parse Excel file
-        function parseExcelFile(file) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                try {
-                    const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, { type: 'array' });
-                    
-                    // Get the first worksheet
-                    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-                    
-                    // Convert to JSON
-                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-                    
-                    if (jsonData.length === 0) {
-                        showStatus('The file is empty.', 'danger');
-                        return;
-                    }
-                    
-                    // Extract headers
-                    fileHeaders = jsonData[0];
-                    
-                    // Extract data
-                    uploadedData = [];
-                    for (let i = 1; i < jsonData.length; i++) {
-                        if (jsonData[i].length === 0) continue;
-                        
-                        const row = {};
-                        fileHeaders.forEach((header, index) => {
-                            row[header] = jsonData[i][index] || '';
-                        });
-                        
-                        uploadedData.push(row);
-                    }
-                    
-                    showFileInfo(file, uploadedData.length);
-                    showStatus(`Successfully uploaded ${uploadedData.length} contacts from Excel file.`, 'success');
-                } catch (error) {
-                    console.error('Error parsing Excel file:', error);
-                    showStatus('Error parsing the Excel file.', 'danger');
-                }
-            };
-            
-            reader.onerror = function() {
-                showStatus('Error reading the file.', 'danger');
-            };
-            
-            reader.readAsArrayBuffer(file);
-        }
-
-        // Show file information
-        function showFileInfo(file, rowCount) {
-            fileInfo.style.display = 'block';
-            fileDetails.innerHTML = `
-                <p><strong>File Name:</strong> ${file.name}</p>
-                <p><strong>File Size:</strong> ${(file.size / 1024).toFixed(2)} KB</p>
-                <p><strong>Total Rows:</strong> ${rowCount}</p>
-                <p><strong>Headers:</strong> ${fileHeaders.join(', ')}</p>
-            `;
-        }
-
-        // Show status message
-        function showStatus(message, type) {
-            uploadStatus.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
-        }
-
-        // Download template file
-        function downloadTemplate() {
-            // Create sample headers for the template
-            const headers = [
-                'ID', 'First Name', 'Last Name', 'Phone Mobile', 'Email Personal', 
-                'Company', 'Designation', 'WhatsApp', 'Facebook', 'LinkedIn'
-            ];
-            
-            // Create sample data
-            const sampleData = [
-                ['1', 'John', 'Doe', '+1234567890', 'john.doe@example.com', 
-                 'Tech Solutions Inc.', 'Software Engineer', '+1234567890', 
-                 'https://facebook.com/johndoe', 'https://linkedin.com/in/johndoe'],
-                ['2', 'Jane', 'Smith', '+0987654321', 'jane.smith@example.com', 
-                 'Digital Innovations LLC', 'Product Manager', '+0987654321', 
-                 'https://facebook.com/janesmith', 'https://linkedin.com/in/janesmith']
-            ];
-            
-            // Create CSV content
-            let csvContent = headers.join(',') + '\n';
-            sampleData.forEach(row => {
-                csvContent += row.join(',') + '\n';
-            });
-            
-            // Create and download the file
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'contact_template.csv';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        // Change contact ID
-        function changeContactId(delta) {
-            let currentId = parseInt(contactId.value) || 1;
-            currentId += delta;
-            
-            if (currentId < 1) currentId = 1;
-            
-            contactId.value = currentId;
-        }
-
-        // Fetch data from uploaded file based on contact ID
-        function fetchDataFromFile() {
-            const id = parseInt(contactId.value);
-            
-            if (!uploadedData.length) {
-                showStatus('No data uploaded. Please upload a file first.', 'warning');
-                return;
+        if (record) break;
+    }
+    
+    if (!record) {
+        alert(`No record found with ID: ${id}. Available IDs: ${uploadedData.map(r => {
+            const idFields = fieldMappings.id;
+            for (const idField of idFields) {
+                const recordKeys = Object.keys(r);
+                const matchingKey = recordKeys.find(key => 
+                    key.toLowerCase().replace(/\s+/g, '') === idField.toLowerCase().replace(/\s+/g, '')
+                );
+                if (matchingKey && r[matchingKey]) return r[matchingKey];
             }
-            
-            // Find the row with matching ID
-            const row = uploadedData.find(item => {
-                const itemId = parseInt(item.ID || item.id || item.Id || 0);
-                return itemId === id;
-            });
-            
-            if (!row) {
-                showStatus(`No data found for ID ${id}.`, 'warning');
-                return;
-            }
-            
-            // Populate form fields
-            for (const key in row) {
-                const field = document.getElementById(key.toLowerCase().replace(' ', ''));
-                if (field) {
-                    field.value = row[key];
-                }
-            }
-            
-            showStatus(`Data for ID ${id} loaded successfully.`, 'success');
+            return 'Unknown';
+        }).join(', ')}`);
+        return;
+    }
+    
+    // Clear all form fields first to avoid data mixing
+    const form = document.getElementById('contactForm');
+    const inputs = form.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        if (input.type !== 'file' && input.id !== 'contactId') {
+            input.value = '';
         }
-
-        // Handle image preview
-        function handleImagePreview() {
-            const file = imageUpload.files[0];
-            if (!file) return;
-            
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                imageBase64 = e.target.result;
-                imagePreview.src = imageBase64;
-                imagePreview.style.display = 'block';
-            };
-            
-            reader.readAsDataURL(file);
-        }
-
+    });
+    
+    // Populate form with record data using improved field mapping
+    document.getElementById('firstName').value = findFieldValue(record, 'firstName') || '';
+    document.getElementById('middleName').value = findFieldValue(record, 'middleName') || '';
+    document.getElementById('lastName').value = findFieldValue(record, 'lastName') || '';
+    document.getElementById('nickName').value = findFieldValue(record, 'nickName') || '';
+    document.getElementById('phoneHome').value = findFieldValue(record, 'phoneHome') || '';
+    document.getElementById('phoneMobile').value = findFieldValue(record, 'phoneMobile') || '';
+    document.getElementById('emailPersonal').value = findFieldValue(record, 'emailPersonal') || '';
+    
+    // Format date of birth
+    const dobValue = findFieldValue(record, 'dob');
+    document.getElementById('dob').value = formatDateOfBirth(dobValue) || '';
+    
+    document.getElementById('street1Personal').value = findFieldValue(record, 'street1Personal') || '';
+    document.getElementById('street2Personal').value = findFieldValue(record, 'street2Personal') || '';
+    document.getElementById('cityPersonal').value = findFieldValue(record, 'cityPersonal') || '';
+    document.getElementById('zipPersonal').value = findFieldValue(record, 'zipPersonal') || '';
+    document.getElementById('countryPersonal').value = findFieldValue(record, 'countryPersonal') || '';
+    
+    document.getElementById('company').value = findFieldValue(record, 'company') || '';
+    document.getElementById('department').value = findFieldValue(record, 'department') || '';
+    document.getElementById('designation').value = findFieldValue(record, 'designation') || '';
+    document.getElementById('role').value = findFieldValue(record, 'role') || '';
+    document.getElementById('phoneWork').value = findFieldValue(record, 'phoneWork') || '';
+    document.getElementById('emailWork').value = findFieldValue(record, 'emailWork') || '';
+    document.getElementById('street1Work').value = findFieldValue(record, 'street1Work') || '';
+    document.getElementById('street2Work').value = findFieldValue(record, 'street2Work') || '';
+    document.getElementById('cityWork').value = findFieldValue(record, 'cityWork') || '';
+    document.getElementById('zipWork').value = findFieldValue(record, 'zipWork') || '';
+    document.getElementById('countryWork').value = findFieldValue(record, 'countryWork') || '';
+    document.getElementById('webAddress').value = findFieldValue(record, 'webAddress') || '';
+    
+    // Social media and instant messaging
+    document.getElementById('whatsapp').value = findFieldValue(record, 'whatsapp') || '';
+    document.getElementById('waBusiness').value = findFieldValue(record, 'waBusiness') || '';
+    document.getElementById('imo').value = findFieldValue(record, 'imo') || '';
+    document.getElementById('viber').value = findFieldValue(record, 'viber') || '';
+    document.getElementById('twitter').value = findFieldValue(record, 'twitter') || '';
+    document.getElementById('messenger').value = findFieldValue(record, 'messenger') || '';
+    document.getElementById('wechat').value = findFieldValue(record, 'wechat') || '';
+    document.getElementById('telegram').value = findFieldValue(record, 'telegram') || '';
+    document.getElementById('snapchat').value = findFieldValue(record, 'snapchat') || '';
+    document.getElementById('facebook').value = findFieldValue(record, 'facebook') || '';
+    document.getElementById('linkedin').value = findFieldValue(record, 'linkedin') || '';
+    document.getElementById('instagram').value = findFieldValue(record, 'instagram') || '';
+    document.getElementById('youtube').value = findFieldValue(record, 'youtube') || '';
+    document.getElementById('fiverr').value = findFieldValue(record, 'fiverr') || '';
+    document.getElementById('upwork').value = findFieldValue(record, 'upwork') || '';
+    document.getElementById('freelancer').value = findFieldValue(record, 'freelancer') || '';
+    
+    alert('Data fetched successfully! Check the form fields below.');
+}
+        
         // Handle form submission
         function handleFormSubmit(e) {
             e.preventDefault();
             
             // Validate required fields
-            const requiredFields = ['firstName', 'lastName', 'phoneMobile'];
-            let isValid = true;
-            
-            requiredFields.forEach(fieldId => {
-                const field = document.getElementById(fieldId);
-                if (!field.value.trim()) {
-                    field.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    field.classList.remove('is-invalid');
-                }
-            });
-            
-            if (!isValid) {
-                showStatus('Please fill in all required fields.', 'danger');
+            if (!imageBase64) {
+                alert('Please upload a profile image');
                 return;
             }
             
-            // Save contact data (in a real app, this would save to a database)
-            const contactData = collectFormData();
-            console.log('Contact data saved:', contactData);
-            
-            showStatus('Contact saved successfully!', 'success');
-        }
-
-        // Collect form data
-        function collectFormData() {
-            const data = {};
-            
-            // Get all form elements
-            const formElements = contactForm.querySelectorAll('input, select, textarea');
-            
-            formElements.forEach(element => {
-                if (element.id && element.value) {
-                    data[element.id] = element.value;
-                }
-            });
-            
-            // Add image data if available
-            if (imageBase64) {
-                data.profileImage = imageBase64;
+            if (!document.getElementById('firstName').value || !document.getElementById('lastName').value || !document.getElementById('phoneMobile').value) {
+                alert('Please fill all required fields (First Name, Last Name, Phone Mobile)');
+                return;
             }
             
-            return data;
+            // In a real application, you would save the data to a database
+            alert('Contact saved successfully!');
         }
-
-        // Download CSV
+        
+        // Download functions
         function downloadCsv() {
-            const contactData = collectFormData();
+            if (!validateDownload()) return;
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phoneMobile = document.getElementById('phoneMobile').value;
+            
+            // Create CSV content with column-wise format (single row with headers)
+            const headers = [
+                'FirstName', 'MiddleName', 'LastName', 'NickName', 'PhoneHome', 'PhoneMobile', 
+                'EmailPersonal', 'DateOfBirth', 'Street1Personal', 'Street2Personal', 'CityPersonal', 
+                'ZipPersonal', 'CountryPersonal', 'Company', 'Department', 'Designation', 'Role', 
+                'PhoneWork', 'EmailWork', 'Street1Work', 'Street2Work', 'CityWork', 'ZipWork', 
+                'CountryWork', 'WebAddress', 'WhatsApp', 'WABusiness', 'Imo', 'Viber', 'Twitter', 
+                'Messenger', 'WeChat', 'Telegram', 'Snapchat', 'Facebook', 'LinkedIn', 'Instagram', 
+                'YouTube', 'Fiverr', 'Upwork', 'Freelancer'
+            ];
+            
+            const values = [
+                firstName,
+                document.getElementById('middleName').value,
+                lastName,
+                document.getElementById('nickName').value,
+                document.getElementById('phoneHome').value,
+                phoneMobile,
+                document.getElementById('emailPersonal').value,
+                document.getElementById('dob').value,
+                document.getElementById('street1Personal').value,
+                document.getElementById('street2Personal').value,
+                document.getElementById('cityPersonal').value,
+                document.getElementById('zipPersonal').value,
+                document.getElementById('countryPersonal').value,
+                document.getElementById('company').value,
+                document.getElementById('department').value,
+                document.getElementById('designation').value,
+                document.getElementById('role').value,
+                document.getElementById('phoneWork').value,
+                document.getElementById('emailWork').value,
+                document.getElementById('street1Work').value,
+                document.getElementById('street2Work').value,
+                document.getElementById('cityWork').value,
+                document.getElementById('zipWork').value,
+                document.getElementById('countryWork').value,
+                document.getElementById('webAddress').value,
+                document.getElementById('whatsapp').value,
+                document.getElementById('waBusiness').value,
+                document.getElementById('imo').value,
+                document.getElementById('viber').value,
+                document.getElementById('twitter').value,
+                document.getElementById('messenger').value,
+                document.getElementById('wechat').value,
+                document.getElementById('telegram').value,
+                document.getElementById('snapchat').value,
+                document.getElementById('facebook').value,
+                document.getElementById('linkedin').value,
+                document.getElementById('instagram').value,
+                document.getElementById('youtube').value,
+                document.getElementById('fiverr').value,
+                document.getElementById('upwork').value,
+                document.getElementById('freelancer').value
+            ];
             
             // Create CSV content
-            let csvContent = 'Field,Value\n';
+            let csvContent = headers.join(',') + '\n';
+            csvContent += values.map(value => `"${value}"`).join(',');
             
-            for (const key in contactData) {
-                if (key !== 'profileImage') { // Skip image data in CSV
-                    const value = contactData[key].replace(/,/g, ';'); // Replace commas to avoid CSV issues
-                    csvContent += `${key},${value}\n`;
-                }
-            }
-            
-            // Create and download the file
+            // Create and download file
             const blob = new Blob([csvContent], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'contact_data.csv';
+            a.download = `${firstName}_${lastName}_${phoneMobile}.csv`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-
-        // Download VCF
+        
         function downloadVcf() {
-            const contactData = collectFormData();
+            if (!validateDownload()) return;
             
-            // Create VCF content
-            let vcfContent = 'BEGIN:VCARD\n';
-            vcfContent += 'VERSION:3.0\n';
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phoneMobile = document.getElementById('phoneMobile').value;
             
-            // Name
-            const firstName = contactData.firstName || '';
-            const middleName = contactData.middleName || '';
-            const lastName = contactData.lastName || '';
-            vcfContent += `N:${lastName};${firstName};${middleName};;\n`;
-            vcfContent += `FN:${firstName} ${middleName} ${lastName}\n`;
+            // Create comprehensive VCF content with all fields
+            let vcfContent = "BEGIN:VCARD\n";
+            vcfContent += "VERSION:3.0\n";
+            vcfContent += `FN:${firstName} ${lastName}\n`;
+            vcfContent += `N:${lastName};${firstName};;;\n`;
             
-            // Nickname
-            if (contactData.nickName) {
-                vcfContent += `NICKNAME:${contactData.nickName}\n`;
+            // Personal Information
+            if (document.getElementById('nickName').value) {
+                vcfContent += `NICKNAME:${document.getElementById('nickName').value}\n`;
             }
             
-            // Phone numbers
-            if (contactData.phoneHome) {
-                vcfContent += `TEL;TYPE=HOME,VOICE:${contactData.phoneHome}\n`;
+            if (document.getElementById('phoneHome').value) {
+                vcfContent += `TEL;TYPE=HOME,VOICE:${document.getElementById('phoneHome').value}\n`;
             }
             
-            if (contactData.phoneMobile) {
-                vcfContent += `TEL;TYPE=CELL,VOICE:${contactData.phoneMobile}\n`;
+            if (phoneMobile) {
+                vcfContent += `TEL;TYPE=CELL,VOICE:${phoneMobile}\n`;
             }
             
-            if (contactData.phoneWork) {
-                vcfContent += `TEL;TYPE=WORK,VOICE:${contactData.phoneWork}\n`;
+            if (document.getElementById('phoneWork').value) {
+                vcfContent += `TEL;TYPE=WORK,VOICE:${document.getElementById('phoneWork').value}\n`;
             }
             
-            // Email addresses
-            if (contactData.emailPersonal) {
-                vcfContent += `EMAIL;TYPE=PERSONAL:${contactData.emailPersonal}\n`;
+            if (document.getElementById('emailPersonal').value) {
+                vcfContent += `EMAIL;TYPE=PERSONAL,INTERNET:${document.getElementById('emailPersonal').value}\n`;
             }
             
-            if (contactData.emailWork) {
-                vcfContent += `EMAIL;TYPE=WORK:${contactData.emailWork}\n`;
+            if (document.getElementById('emailWork').value) {
+                vcfContent += `EMAIL;TYPE=WORK,INTERNET:${document.getElementById('emailWork').value}\n`;
             }
             
-            // Addresses
-            if (contactData.street1Personal || contactData.cityPersonal || contactData.countryPersonal) {
-                vcfContent += `ADR;TYPE=HOME:;;${contactData.street1Personal};${contactData.cityPersonal};;${contactData.zipPersonal};${contactData.countryPersonal}\n`;
+            if (document.getElementById('dob').value) {
+                vcfContent += `BDAY:${document.getElementById('dob').value}\n`;
             }
             
-            if (contactData.street1Work || contactData.cityWork || contactData.countryWork) {
-                vcfContent += `ADR;TYPE=WORK:;;${contactData.street1Work};${contactData.cityWork};;${contactData.zipWork};${contactData.countryWork}\n`;
+            // Personal Address
+            const street1 = document.getElementById('street1Personal').value;
+            const street2 = document.getElementById('street2Personal').value;
+            const city = document.getElementById('cityPersonal').value;
+            const zip = document.getElementById('zipPersonal').value;
+            const country = document.getElementById('countryPersonal').value;
+            
+            if (street1 || city || zip || country) {
+                vcfContent += `ADR;TYPE=HOME:;;${street1};${city};;${zip};${country}\n`;
             }
             
-            // Organization
-            if (contactData.company || contactData.department || contactData.designation) {
-                vcfContent += `ORG:${contactData.company};${contactData.department}\n`;
-                vcfContent += `TITLE:${contactData.designation}\n`;
+            // Work Information
+            if (document.getElementById('company').value) {
+                vcfContent += `ORG:${document.getElementById('company').value}\n`;
             }
             
-            // Website
-            if (contactData.webAddress) {
-                vcfContent += `URL:${contactData.webAddress}\n`;
+            if (document.getElementById('department').value) {
+                vcfContent += `ORG:${document.getElementById('company').value || ''};${document.getElementById('department').value}\n`;
             }
             
-            // Social media and instant messaging
-            if (contactData.whatsapp) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=whatsapp:${contactData.whatsapp}\n`;
+            if (document.getElementById('designation').value) {
+                vcfContent += `TITLE:${document.getElementById('designation').value}\n`;
             }
             
-            if (contactData.waBusiness) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=whatsapp-business:${contactData.waBusiness}\n`;
+            if (document.getElementById('role').value) {
+                vcfContent += `ROLE:${document.getElementById('role').value}\n`;
             }
             
-            if (contactData.imo) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=imo:${contactData.imo}\n`;
+            // Work Address
+            const workStreet1 = document.getElementById('street1Work').value;
+            const workStreet2 = document.getElementById('street2Work').value;
+            const workCity = document.getElementById('cityWork').value;
+            const workZip = document.getElementById('zipWork').value;
+            const workCountry = document.getElementById('countryWork').value;
+            
+            if (workStreet1 || workCity || workZip || workCountry) {
+                vcfContent += `ADR;TYPE=WORK:;;${workStreet1};${workCity};;${workZip};${workCountry}\n`;
             }
             
-            if (contactData.viber) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=viber:${contactData.viber}\n`;
+            // Web and Social
+            if (document.getElementById('webAddress').value) {
+                vcfContent += `URL:${document.getElementById('webAddress').value}\n`;
             }
             
-            if (contactData.twitter) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=twitter:${contactData.twitter}\n`;
+            // Instant Messaging and Social Media
+            if (document.getElementById('whatsapp').value) {
+                vcfContent += `X-SOCIALPROFILE;TYPE=whatsapp:${document.getElementById('whatsapp').value}\n`;
             }
             
-            if (contactData.messenger) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=messenger:${contactData.messenger}\n`;
+            if (document.getElementById('facebook').value) {
+                vcfContent += `X-SOCIALPROFILE;TYPE=facebook:${document.getElementById('facebook').value}\n`;
             }
             
-            if (contactData.wechat) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=wechat:${contactData.wechat}\n`;
+            if (document.getElementById('linkedin').value) {
+                vcfContent += `X-SOCIALPROFILE;TYPE=linkedin:${document.getElementById('linkedin').value}\n`;
             }
             
-            if (contactData.telegram) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=telegram:${contactData.telegram}\n`;
+            if (document.getElementById('twitter').value) {
+                vcfContent += `X-SOCIALPROFILE;TYPE=twitter:${document.getElementById('twitter').value}\n`;
             }
             
-            if (contactData.snapchat) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=snapchat:${contactData.snapchat}\n`;
+            if (document.getElementById('instagram').value) {
+                vcfContent += `X-SOCIALPROFILE;TYPE=instagram:${document.getElementById('instagram').value}\n`;
             }
             
-            if (contactData.signal) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=signal:${contactData.signal}\n`;
+            if (document.getElementById('youtube').value) {
+                vcfContent += `X-SOCIALPROFILE;TYPE=youtube:${document.getElementById('youtube').value}\n`;
             }
             
-            if (contactData.discord) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=discord:${contactData.discord}\n`;
-            }
-            
-            if (contactData.skype) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=skype:${contactData.skype}\n`;
-            }
-            
-            if (contactData.line) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=line:${contactData.line}\n`;
-            }
-            
-            if (contactData.kik) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=kik:${contactData.kik}\n`;
-            }
-            
-            if (contactData.threema) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=threema:${contactData.threema}\n`;
-            }
-            
-            if (contactData.facebook) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=facebook:${contactData.facebook}\n`;
-            }
-            
-            if (contactData.linkedin) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=linkedin:${contactData.linkedin}\n`;
-            }
-            
-            if (contactData.instagram) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=instagram:${contactData.instagram}\n`;
-            }
-            
-            if (contactData.youtube) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=youtube:${contactData.youtube}\n`;
-            }
-            
-            if (contactData.fiverr) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=fiverr:${contactData.fiverr}\n`;
-            }
-            
-            if (contactData.upwork) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=upwork:${contactData.upwork}\n`;
-            }
-            
-            if (contactData.freelancer) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=freelancer:${contactData.freelancer}\n`;
-            }
-            
-            if (contactData.tiktok) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=tiktok:${contactData.tiktok}\n`;
-            }
-            
-            if (contactData.pinterest) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=pinterest:${contactData.pinterest}\n`;
-            }
-            
-            if (contactData.reddit) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=reddit:${contactData.reddit}\n`;
-            }
-            
-            if (contactData.tumblr) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=tumblr:${contactData.tumblr}\n`;
-            }
-            
-            if (contactData.github) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=github:${contactData.github}\n`;
-            }
-            
-            if (contactData.dribbble) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=dribbble:${contactData.dribbble}\n`;
-            }
-            
-            if (contactData.behance) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=behance:${contactData.behance}\n`;
-            }
-            
-            if (contactData.medium) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=medium:${contactData.medium}\n`;
-            }
-            
-            // Birthday
-            if (contactData.dob) {
-                vcfContent += `BDAY:${contactData.dob}\n`;
-            }
-            
-            // Photo
+            // Add photo if available
             if (imageBase64) {
                 vcfContent += `PHOTO;ENCODING=B;TYPE=JPEG:${imageBase64.split(',')[1]}\n`;
             }
             
-            vcfContent += 'END:VCARD';
+            // Notes section with additional data
+            let notes = '';
+            if (document.getElementById('waBusiness').value) notes += `WA Business: ${document.getElementById('waBusiness').value}\n`;
+            if (document.getElementById('imo').value) notes += `Imo: ${document.getElementById('imo').value}\n`;
+            if (document.getElementById('viber').value) notes += `Viber: ${document.getElementById('viber').value}\n`;
+            if (document.getElementById('messenger').value) notes += `Messenger: ${document.getElementById('messenger').value}\n`;
+            if (document.getElementById('wechat').value) notes += `WeChat: ${document.getElementById('wechat').value}\n`;
+            if (document.getElementById('telegram').value) notes += `Telegram: ${document.getElementById('telegram').value}\n`;
+            if (document.getElementById('snapchat').value) notes += `Snapchat: ${document.getElementById('snapchat').value}\n`;
+            if (document.getElementById('fiverr').value) notes += `Fiverr: ${document.getElementById('fiverr').value}\n`;
+            if (document.getElementById('upwork').value) notes += `Upwork: ${document.getElementById('upwork').value}\n`;
+            if (document.getElementById('freelancer').value) notes += `Freelancer: ${document.getElementById('freelancer').value}\n`;
             
-            // Create and download the file
+            if (notes) {
+                vcfContent += `NOTE:${notes}\n`;
+            }
+            
+            vcfContent += "END:VCARD";
+            
+            // Create and download file
             const blob = new Blob([vcfContent], { type: 'text/vcard' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'contact.vcf';
+            a.download = `${firstName}_${lastName}_${phoneMobile}.vcf`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-
-        // Generate QR code
-        function generateQrCode() {
-            const contactData = collectFormData();
-            const vcfContent = createVcfContent(contactData);
+        
+        // QR Code function
+        function generateAndDisplayQrCode() {
+            if (!validateDownload()) return;
             
-            // Clear previous QR code
-            qrcode.innerHTML = '';
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phoneMobile = document.getElementById('phoneMobile').value;
+            
+            // Create comprehensive VCF content for QR code with ALL fields
+            let vcfContent = "BEGIN:VCARD\n";
+            vcfContent += "VERSION:3.0\n";
+            vcfContent += `FN:${firstName} ${lastName}\n`;
+            vcfContent += `N:${lastName};${firstName};;;\n`;
+            
+            // Personal Information
+            if (document.getElementById('middleName').value) {
+                vcfContent += `N:${lastName};${firstName};${document.getElementById('middleName').value};;\n`;
+            }
+            
+            if (document.getElementById('nickName').value) {
+                vcfContent += `NICKNAME:${document.getElementById('nickName').value}\n`;
+            }
+            
+            if (document.getElementById('phoneHome').value) {
+                vcfContent += `TEL;TYPE=HOME,VOICE:${document.getElementById('phoneHome').value}\n`;
+            }
+            
+            if (phoneMobile) {
+                vcfContent += `TEL;TYPE=CELL,VOICE:${phoneMobile}\n`;
+            }
+            
+            if (document.getElementById('phoneWork').value) {
+                vcfContent += `TEL;TYPE=WORK,VOICE:${document.getElementById('phoneWork').value}\n`;
+            }
+            
+            if (document.getElementById('emailPersonal').value) {
+                vcfContent += `EMAIL;TYPE=PERSONAL,INTERNET:${document.getElementById('emailPersonal').value}\n`;
+            }
+            
+            if (document.getElementById('emailWork').value) {
+                vcfContent += `EMAIL;TYPE=WORK,INTERNET:${document.getElementById('emailWork').value}\n`;
+            }
+            
+            if (document.getElementById('dob').value) {
+                vcfContent += `BDAY:${document.getElementById('dob').value}\n`;
+            }
+            
+            // Personal Address
+            const street1 = document.getElementById('street1Personal').value;
+            const street2 = document.getElementById('street2Personal').value;
+            const city = document.getElementById('cityPersonal').value;
+            const zip = document.getElementById('zipPersonal').value;
+            const country = document.getElementById('countryPersonal').value;
+            
+            if (street1 || city || zip || country) {
+                vcfContent += `ADR;TYPE=HOME:;;${street1};${city};;${zip};${country}\n`;
+            }
+            
+            // Work Information
+            if (document.getElementById('company').value) {
+                vcfContent += `ORG:${document.getElementById('company').value}\n`;
+            }
+            
+            if (document.getElementById('department').value) {
+                vcfContent += `ORG:${document.getElementById('company').value || ''};${document.getElementById('department').value}\n`;
+            }
+            
+            if (document.getElementById('designation').value) {
+                vcfContent += `TITLE:${document.getElementById('designation').value}\n`;
+            }
+            
+            if (document.getElementById('role').value) {
+                vcfContent += `ROLE:${document.getElementById('role').value}\n`;
+            }
+            
+            // Work Address
+            const workStreet1 = document.getElementById('street1Work').value;
+            const workStreet2 = document.getElementById('street2Work').value;
+            const workCity = document.getElementById('cityWork').value;
+            const workZip = document.getElementById('zipWork').value;
+            const workCountry = document.getElementById('countryWork').value;
+            
+            if (workStreet1 || workCity || workZip || workCountry) {
+                vcfContent += `ADR;TYPE=WORK:;;${workStreet1};${workCity};;${workZip};${workCountry}\n`;
+            }
+            
+            // Web and Social
+            if (document.getElementById('webAddress').value) {
+                vcfContent += `URL:${document.getElementById('webAddress').value}\n`;
+            }
+            
+            // Instant Messaging and Social Media
+            const socialProfiles = [
+                { type: 'whatsapp', value: document.getElementById('whatsapp').value },
+                { type: 'wabusiness', value: document.getElementById('waBusiness').value },
+                { type: 'imo', value: document.getElementById('imo').value },
+                { type: 'viber', value: document.getElementById('viber').value },
+                { type: 'twitter', value: document.getElementById('twitter').value },
+                { type: 'messenger', value: document.getElementById('messenger').value },
+                { type: 'wechat', value: document.getElementById('wechat').value },
+                { type: 'telegram', value: document.getElementById('telegram').value },
+                { type: 'snapchat', value: document.getElementById('snapchat').value },
+                { type: 'facebook', value: document.getElementById('facebook').value },
+                { type: 'linkedin', value: document.getElementById('linkedin').value },
+                { type: 'instagram', value: document.getElementById('instagram').value },
+                { type: 'youtube', value: document.getElementById('youtube').value },
+                { type: 'fiverr', value: document.getElementById('fiverr').value },
+                { type: 'upwork', value: document.getElementById('upwork').value },
+                { type: 'freelancer', value: document.getElementById('freelancer').value }
+            ];
+            
+            socialProfiles.forEach(profile => {
+                if (profile.value) {
+                    vcfContent += `X-SOCIALPROFILE;TYPE=${profile.type}:${profile.value}\n`;
+                }
+            });
+            
+            // Add photo if available
+            if (imageBase64) {
+                vcfContent += `PHOTO;ENCODING=B;TYPE=JPEG:${imageBase64.split(',')[1]}\n`;
+            }
+            
+            vcfContent += "END:VCARD";
+            
+            console.log('QR Code VCF Content:', vcfContent);
             
             // Generate QR code
-            const qr = qrcode(0, 'M');
-            qr.addData(vcfContent);
-            qr.make();
-            
-            // Create QR code image
-            const qrImage = qr.createImgTag(5);
-            qrcode.innerHTML = qrImage;
-            
-            // Show QR code container
-            qrCodeContainer.style.display = 'block';
-            
-            // Scroll to QR code
-            qrCodeContainer.scrollIntoView({ behavior: 'smooth' });
+            try {
+                const qr = qrcode(0, 'M');
+                qr.addData(vcfContent);
+                qr.make();
+                
+                // Display QR code
+                const qrCodeElement = document.getElementById('qrcode');
+                qrCodeElement.innerHTML = '';
+                qrCodeElement.appendChild(qr.createImgTag(5));
+                qrCodeContainer.style.display = 'block';
+                
+                // Scroll to QR code
+                qrCodeContainer.scrollIntoView({ behavior: 'smooth' });
+                
+                alert('QR Code generated successfully!');
+            } catch (error) {
+                console.error('QR Code generation error:', error);
+                alert('Error generating QR code. Please try again.');
+            }
         }
-
-        // Create VCF content for QR code
-        function createVcfContent(contactData) {
-            // Same VCF creation logic as in downloadVcf function
-            let vcfContent = 'BEGIN:VCARD\n';
-            vcfContent += 'VERSION:3.0\n';
-            
-            // Name
-            const firstName = contactData.firstName || '';
-            const middleName = contactData.middleName || '';
-            const lastName = contactData.lastName || '';
-            vcfContent += `N:${lastName};${firstName};${middleName};;\n`;
-            vcfContent += `FN:${firstName} ${middleName} ${lastName}\n`;
-            
-            // Phone numbers
-            if (contactData.phoneMobile) {
-                vcfContent += `TEL;TYPE=CELL,VOICE:${contactData.phoneMobile}\n`;
+        
+        function downloadQrCodeImage() {
+            const qrCodeImg = document.querySelector('#qrcode img');
+            if (!qrCodeImg) {
+                alert('Please generate a QR code first by clicking "Generate QR Code"');
+                return;
             }
             
-            // Email addresses
-            if (contactData.emailPersonal) {
-                vcfContent += `EMAIL;TYPE=PERSONAL:${contactData.emailPersonal}\n`;
-            }
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const phoneMobile = document.getElementById('phoneMobile').value;
             
-            // Organization
-            if (contactData.company) {
-                vcfContent += `ORG:${contactData.company}\n`;
-            }
+            // Create a canvas to draw the QR code
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
             
-            if (contactData.designation) {
-                vcfContent += `TITLE:${contactData.designation}\n`;
-            }
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                
+                // Convert canvas to image and download
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${firstName}_${lastName}_${phoneMobile}_qrcode.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                });
+            };
             
-            // Social media and instant messaging
-            if (contactData.whatsapp) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=whatsapp:${contactData.whatsapp}\n`;
-            }
-            
-            if (contactData.facebook) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=facebook:${contactData.facebook}\n`;
-            }
-            
-            if (contactData.linkedin) {
-                vcfContent += `X-SOCIALPROFILE;TYPE=linkedin:${contactData.linkedin}\n`;
-            }
-            
-            vcfContent += 'END:VCARD';
-            
-            return vcfContent;
+            img.src = qrCodeImg.src;
         }
-
-        // Save QR code as image
-        function saveQrCode() {
-            const qrImage = qrcode.querySelector('img');
-            if (!qrImage) return;
-            
-            const a = document.createElement('a');
-            a.href = qrImage.src;
-            a.download = 'contact_qr_code.png';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+        
+        function validateDownload() {
+            if (!document.getElementById('firstName').value || !document.getElementById('lastName').value || !document.getElementById('phoneMobile').value) {
+                alert('Please fill all required fields (First Name, Last Name, Phone Mobile) before downloading');
+                return false;
+            }
+            return true;
         }
-
-        // Process payment
-        function processPayment() {
-            // In a real application, this would integrate with a payment gateway
-            // For this demo, we'll just show a success message
-            
+        
+        // Payment functions
+        function showPaymentModal() {
+            if (!validateDownload()) return;
+            paymentModal.style.display = 'flex';
+        }
+        
+        function hidePaymentModal() {
             paymentModal.style.display = 'none';
-            showStatus('Payment processed successfully!', 'success');
         }
-
-        // Scroll to top
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Scroll to bottom
-        function scrollToBottom() {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }
-
-        // Toggle scroll buttons visibility
-        function toggleScrollButtons() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
+        
+        function processPayment() {
+            const cardNumber = document.getElementById('cardNumber').value;
+            const expiryDate = document.getElementById('expiryDate').value;
+            const cvv = document.getElementById('cvv').value;
+            const cardholderName = document.getElementById('cardholderName').value;
             
-            // Show/hide scroll to top button
-            if (scrollTop > 100) {
-                scrollToTopBtn.style.display = 'flex';
-            } else {
-                scrollToTopBtn.style.display = 'none';
+            // Simple validation
+            if (!cardNumber || !expiryDate || !cvv || !cardholderName) {
+                alert('Please fill all payment details');
+                return;
             }
             
-            // Show/hide scroll to bottom button
-            if (scrollTop + windowHeight < documentHeight - 100) {
-                scrollToBottomBtn.style.display = 'flex';
-            } else {
-                scrollToBottomBtn.style.display = 'none';
-            }
+            // Simulate payment processing
+            setTimeout(() => {
+                hidePaymentModal();
+                alert('Payment received! You may now download the files.');
+                
+                // Clear payment form
+                document.getElementById('cardNumber').value = '';
+                document.getElementById('expiryDate').value = '';
+                document.getElementById('cvv').value = '';
+                document.getElementById('cardholderName').value = '';
+            }, 1500);
         }
-
-        // Initialize the application when the DOM is loaded
-        document.addEventListener('DOMContentLoaded', init);
+        
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
