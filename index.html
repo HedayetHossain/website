@@ -1646,236 +1646,123 @@
             URL.revokeObjectURL(url);
         }
         
-        // QR Code function
-        function generateAndDisplayQrCode() {
-            if (!validateDownload()) return;
-            
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const phoneMobile = document.getElementById('phoneMobile').value;
-            
-            // Create comprehensive VCF content for QR code with ALL fields
-            let vcfContent = "BEGIN:VCARD\n";
-            vcfContent += "VERSION:3.0\n";
-            vcfContent += `FN:${firstName} ${lastName}\n`;
-            vcfContent += `N:${lastName};${firstName};;;\n`;
-            
-            // Personal Information
-            if (document.getElementById('middleName').value) {
-                vcfContent += `N:${lastName};${firstName};${document.getElementById('middleName').value};;\n`;
-            }
-            
-            if (document.getElementById('nickName').value) {
-                vcfContent += `NICKNAME:${document.getElementById('nickName').value}\n`;
-            }
-            
-            if (document.getElementById('phoneHome').value) {
-                vcfContent += `TEL;TYPE=HOME,VOICE:${document.getElementById('phoneHome').value}\n`;
-            }
-            
-            if (phoneMobile) {
-                vcfContent += `TEL;TYPE=CELL,VOICE:${phoneMobile}\n`;
-            }
-            
-            if (document.getElementById('phoneWork').value) {
-                vcfContent += `TEL;TYPE=WORK,VOICE:${document.getElementById('phoneWork').value}\n`;
-            }
-            
-            if (document.getElementById('emailPersonal').value) {
-                vcfContent += `EMAIL;TYPE=PERSONAL,INTERNET:${document.getElementById('emailPersonal').value}\n`;
-            }
-            
-            if (document.getElementById('emailWork').value) {
-                vcfContent += `EMAIL;TYPE=WORK,INTERNET:${document.getElementById('emailWork').value}\n`;
-            }
-            
-            if (document.getElementById('dob').value) {
-                vcfContent += `BDAY:${document.getElementById('dob').value}\n`;
-            }
-            
-            // Personal Address
-            const street1 = document.getElementById('street1Personal').value;
-            const street2 = document.getElementById('street2Personal').value;
-            const city = document.getElementById('cityPersonal').value;
-            const zip = document.getElementById('zipPersonal').value;
-            const country = document.getElementById('countryPersonal').value;
-            
-            if (street1 || city || zip || country) {
-                vcfContent += `ADR;TYPE=HOME:;;${street1};${city};;${zip};${country}\n`;
-            }
-            
-            // Work Information
-            if (document.getElementById('company').value) {
-                vcfContent += `ORG:${document.getElementById('company').value}\n`;
-            }
-            
-            if (document.getElementById('department').value) {
-                vcfContent += `ORG:${document.getElementById('company').value || ''};${document.getElementById('department').value}\n`;
-            }
-            
-            if (document.getElementById('designation').value) {
-                vcfContent += `TITLE:${document.getElementById('designation').value}\n`;
-            }
-            
-            if (document.getElementById('role').value) {
-                vcfContent += `ROLE:${document.getElementById('role').value}\n`;
-            }
-            
-            // Work Address
-            const workStreet1 = document.getElementById('street1Work').value;
-            const workStreet2 = document.getElementById('street2Work').value;
-            const workCity = document.getElementById('cityWork').value;
-            const workZip = document.getElementById('zipWork').value;
-            const workCountry = document.getElementById('countryWork').value;
-            
-            if (workStreet1 || workCity || workZip || workCountry) {
-                vcfContent += `ADR;TYPE=WORK:;;${workStreet1};${workCity};;${workZip};${workCountry}\n`;
-            }
-            
-            // Web and Social
-            if (document.getElementById('webAddress').value) {
-                vcfContent += `URL:${document.getElementById('webAddress').value}\n`;
-            }
-            
-            // Instant Messaging and Social Media
-            const socialProfiles = [
-                { type: 'whatsapp', value: document.getElementById('whatsapp').value },
-                { type: 'wabusiness', value: document.getElementById('waBusiness').value },
-                { type: 'imo', value: document.getElementById('imo').value },
-                { type: 'viber', value: document.getElementById('viber').value },
-                { type: 'twitter', value: document.getElementById('twitter').value },
-                { type: 'messenger', value: document.getElementById('messenger').value },
-                { type: 'wechat', value: document.getElementById('wechat').value },
-                { type: 'telegram', value: document.getElementById('telegram').value },
-                { type: 'snapchat', value: document.getElementById('snapchat').value },
-                { type: 'facebook', value: document.getElementById('facebook').value },
-                { type: 'linkedin', value: document.getElementById('linkedin').value },
-                { type: 'instagram', value: document.getElementById('instagram').value },
-                { type: 'youtube', value: document.getElementById('youtube').value },
-                { type: 'fiverr', value: document.getElementById('fiverr').value },
-                { type: 'upwork', value: document.getElementById('upwork').value },
-                { type: 'freelancer', value: document.getElementById('freelancer').value }
-            ];
-            
-            socialProfiles.forEach(profile => {
-                if (profile.value) {
-                    vcfContent += `X-SOCIALPROFILE;TYPE=${profile.type}:${profile.value}\n`;
-                }
-            });
-            
-            // Add photo if available
-            if (imageBase64) {
-                vcfContent += `PHOTO;ENCODING=B;TYPE=JPEG:${imageBase64.split(',')[1]}\n`;
-            }
-            
-            vcfContent += "END:VCARD";
-            
-            console.log('QR Code VCF Content:', vcfContent);
-            
-            // Generate QR code
-            try {
-                const qr = qrcode(0, 'M');
-                qr.addData(vcfContent);
-                qr.make();
-                
-                // Display QR code
-                const qrCodeElement = document.getElementById('qrcode');
-                qrCodeElement.innerHTML = '';
-                qrCodeElement.appendChild(qr.createImgTag(5));
-                qrCodeContainer.style.display = 'block';
-                
-                // Scroll to QR code
-                qrCodeContainer.scrollIntoView({ behavior: 'smooth' });
-                
-                alert('QR Code generated successfully!');
-            } catch (error) {
-                console.error('QR Code generation error:', error);
-                alert('Error generating QR code. Please try again.');
-            }
+        <script>
+    // --- keep all your variables and functions above here unchanged until generateAndDisplayQrCode() ---
+
+    // FIXED QR CODE FUNCTION  ------------------------------------------------  Updated
+    function generateAndDisplayQrCode() {
+        if (!validateDownload()) return;
+
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const phoneMobile = document.getElementById('phoneMobile').value;
+
+        // Build VCF content
+        let vcfContent = "BEGIN:VCARD\n";
+        vcfContent += "VERSION:3.0\n";
+        vcfContent += `FN:${firstName} ${lastName}\n`;
+        vcfContent += `N:${lastName};${firstName};;;\n`;
+
+        // Phones
+        if (document.getElementById('phoneHome').value)
+            vcfContent += `TEL;TYPE=HOME,VOICE:${document.getElementById('phoneHome').value}\n`;
+        if (phoneMobile)
+            vcfContent += `TEL;TYPE=CELL,VOICE:${phoneMobile}\n`;
+        if (document.getElementById('phoneWork').value)
+            vcfContent += `TEL;TYPE=WORK,VOICE:${document.getElementById('phoneWork').value}\n`;
+
+        // Emails
+        if (document.getElementById('emailPersonal').value)
+            vcfContent += `EMAIL;TYPE=HOME,INTERNET:${document.getElementById('emailPersonal').value}\n`;
+        if (document.getElementById('emailWork').value)
+            vcfContent += `EMAIL;TYPE=WORK,INTERNET:${document.getElementById('emailWork').value}\n`;
+
+        // Work
+        if (document.getElementById('company').value)
+            vcfContent += `ORG:${document.getElementById('company').value}\n`;
+        if (document.getElementById('designation').value)
+            vcfContent += `TITLE:${document.getElementById('designation').value}\n`;
+        if (document.getElementById('role').value)
+            vcfContent += `ROLE:${document.getElementById('role').value}\n`;
+
+        // Addresses
+        const street1 = document.getElementById('street1Personal').value;
+        const city = document.getElementById('cityPersonal').value;
+        const zip = document.getElementById('zipPersonal').value;
+        const country = document.getElementById('countryPersonal').value;
+        if (street1 || city || zip || country)
+            vcfContent += `ADR;TYPE=HOME:;;${street1};${city};;${zip};${country}\n`;
+
+        const workStreet = document.getElementById('street1Work').value;
+        const workCity = document.getElementById('cityWork').value;
+        const workZip = document.getElementById('zipWork').value;
+        const workCountry = document.getElementById('countryWork').value;
+        if (workStreet || workCity || workZip || workCountry)
+            vcfContent += `ADR;TYPE=WORK:;;${workStreet};${workCity};;${workZip};${workCountry}\n`;
+
+        // Websites / Social
+        if (document.getElementById('webAddress').value)
+            vcfContent += `URL:${document.getElementById('webAddress').value}\n`;
+        if (document.getElementById('facebook').value)
+            vcfContent += `X-SOCIALPROFILE;TYPE=facebook:${document.getElementById('facebook').value}\n`;
+        if (document.getElementById('linkedin').value)
+            vcfContent += `X-SOCIALPROFILE;TYPE=linkedin:${document.getElementById('linkedin').value}\n`;
+        if (document.getElementById('instagram').value)
+            vcfContent += `X-SOCIALPROFILE;TYPE=instagram:${document.getElementById('instagram').value}\n`;
+        if (document.getElementById('upwork').value)
+            vcfContent += `X-SOCIALPROFILE;TYPE=upwork:${document.getElementById('upwork').value}\n`;
+
+        // Image
+        if (imageBase64)
+            vcfContent += `PHOTO;ENCODING=b;TYPE=JPEG:${imageBase64.split(',')[1]}\n`;
+
+        vcfContent += "END:VCARD";
+
+        // ---- QR generation ----
+        const qrContainer = document.getElementById('qrcode');
+        qrContainer.innerHTML = "";
+
+        try {
+            const qr = qrcode(0, 'M');
+            qr.addData(vcfContent);
+            qr.make();
+            qrContainer.innerHTML = qr.createImgTag(5);
+            document.getElementById('qrCodeContainer').style.display = 'block';
+        } catch (err) {
+            console.error(err);
+            alert("Failed to generate QR code.");
         }
-        
-        function downloadQrCodeImage() {
-            const qrCodeImg = document.querySelector('#qrcode img');
-            if (!qrCodeImg) {
-                alert('Please generate a QR code first by clicking "Generate QR Code"');
-                return;
-            }
-            
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const phoneMobile = document.getElementById('phoneMobile').value;
-            
-            // Create a canvas to draw the QR code
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const img = new Image();
-            
-            img.onload = function() {
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-                
-                // Convert canvas to image and download
-                canvas.toBlob(function(blob) {
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `${firstName}_${lastName}_${phoneMobile}_qrcode.png`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                });
-            };
-            
-            img.src = qrCodeImg.src;
+    }
+
+    // Allow QR download
+    function downloadQrCodeImage() {
+        const qrImage = document.querySelector('#qrcode img');
+        if (!qrImage) {
+            alert('No QR code generated yet.');
+            return;
         }
-        
-        function validateDownload() {
-            if (!document.getElementById('firstName').value || !document.getElementById('lastName').value || !document.getElementById('phoneMobile').value) {
-                alert('Please fill all required fields (First Name, Last Name, Phone Mobile) before downloading');
-                return false;
-            }
-            return true;
+        const link = document.createElement('a');
+        link.href = qrImage.src;
+        link.download = 'contact_qr.png';
+        link.click();
+    }
+
+    // Validate before generating QR or downloads
+    function validateDownload() {
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const phoneMobile = document.getElementById('phoneMobile').value.trim();
+
+        if (!firstName || !lastName || !phoneMobile) {
+            alert("Please fill required fields: First Name, Last Name, Phone Mobile");
+            return false;
         }
-        
-        // Payment functions
-        function showPaymentModal() {
-            if (!validateDownload()) return;
-            paymentModal.style.display = 'flex';
-        }
-        
-        function hidePaymentModal() {
-            paymentModal.style.display = 'none';
-        }
-        
-        function processPayment() {
-            const cardNumber = document.getElementById('cardNumber').value;
-            const expiryDate = document.getElementById('expiryDate').value;
-            const cvv = document.getElementById('cvv').value;
-            const cardholderName = document.getElementById('cardholderName').value;
-            
-            // Simple validation
-            if (!cardNumber || !expiryDate || !cvv || !cardholderName) {
-                alert('Please fill all payment details');
-                return;
-            }
-            
-            // Simulate payment processing
-            setTimeout(() => {
-                hidePaymentModal();
-                alert('Payment received! You may now download the files.');
-                
-                // Clear payment form
-                document.getElementById('cardNumber').value = '';
-                document.getElementById('expiryDate').value = '';
-                document.getElementById('cvv').value = '';
-                document.getElementById('cardholderName').value = '';
-            }, 1500);
-        }
-        
-        // Initialize the app when the page loads
-        document.addEventListener('DOMContentLoaded', initApp);
-    </script>
+        return true;
+    }
+
+    // Initialize the app------------------------------------------------  Updated
+    document.addEventListener('DOMContentLoaded', initApp);
+</script>
+
 </body>
 </html>
