@@ -242,16 +242,6 @@
             transform: scale(1.1);
             transition: all 0.3s ease;
         }
-        
-        .debug-info {
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            padding: 10px;
-            margin-top: 10px;
-            font-size: 0.8rem;
-            max-height: 200px;
-            overflow-y: auto;
-        }
     </style>
 </head>
 <body>
@@ -358,10 +348,6 @@
                         <div id="fileInfo" class="file-info" style="display: none;">
                             <h6>File Information:</h6>
                             <div id="fileDetails"></div>
-                        </div>
-                        <div id="debugInfo" class="debug-info" style="display: none;">
-                            <h6>Debug Information:</h6>
-                            <div id="debugDetails"></div>
                         </div>
                     </div>
                 </div>
@@ -765,8 +751,6 @@
         const uploadStatus = document.getElementById('uploadStatus');
         const fileInfo = document.getElementById('fileInfo');
         const fileDetails = document.getElementById('fileDetails');
-        const debugInfo = document.getElementById('debugInfo');
-        const debugDetails = document.getElementById('debugDetails');
         const contactForm = document.getElementById('contactForm');
         const fetchDataBtn = document.getElementById('fetchDataBtn');
         const contactId = document.getElementById('contactId');
@@ -791,215 +775,486 @@
         
         // Field mapping for different naming conventions - FIXED VERSION
         const fieldMappings = {
-        // ID fields
-    'id': ['ID', 'Id', 'id', 'ContactID', 'Contact Id', 'Contact ID', 'ContactID', 'CONTACTID'],
+            // ID fields
+            'id': ['ID', 'Id', 'id', 'ContactID', 'Contact Id', 'Contact ID'],
             
-           // Personal Information
-    'firstName': ['FirstName', 'First Name', 'First_Name', 'firstname', 'first name', 'fname', 'FName', 'FIRSTNAME', 'Given Name', 'GivenName'],
-    'middleName': ['MiddleName', 'Middle Name', 'Middle_Name', 'middlename', 'middle name', 'mname', 'MName', 'MIDDLENAME'],
-    'lastName': ['LastName', 'Last Name', 'Last_Name', 'lastname', 'last name', 'lname', 'LName', 'LASTNAME', 'Surname', 'Family Name'],
-    'nickName': ['NickName', 'Nick Name', 'Nick_Name', 'nickname', 'nick name', 'nick', 'Nick', 'NICKNAME'],
-    'phoneHome': ['PhoneHome', 'Phone Home', 'Phone_Home', 'phonehome', 'home phone', 'homephone', 'HomePhone', 'HOME_PHONE', 'Home', 'Home Tel'],
-    'phoneMobile': ['PhoneMobile', 'Phone Mobile', 'Phone_Mobile', 'phonemobile', 'mobile phone', 'mobile', 'cell', 'cellphone', 'Mobile', 'MobilePhone', 'MOBILE', 'Cell Phone'],
-    'emailPersonal': ['EmailPersonal', 'Email Personal', 'Email_Personal', 'emailpersonal', 'personal email', 'email', 'Email', 'EMAIL', 'Personal Email'],
-    'dob': ['DateOfBirth', 'Date of Birth', 'Date_of_Birth', 'dob', 'birthdate', 'birth date', 'DOB', 'Birthday'],
-    'street1Personal': ['Street1Personal', 'Street 1 Personal', 'Street1 Personal', 'street1personal', 'personal street1', 'address1', 'Address1', 'Street1', 'Street 1'],
-    'street2Personal': ['Street2Personal', 'Street 2 Personal', 'Street2 Personal', 'street2personal', 'personal street2', 'address2', 'Address2', 'Street2', 'Street 2'],
-    'cityPersonal': ['CityPersonal', 'City Personal', 'City_Personal', 'citypersonal', 'personal city', 'city', 'City', 'CITY'],
-    'zipPersonal': ['ZipPersonal', 'ZIP Personal', 'Zip_Personal', 'zippersonal', 'personal zip', 'zip', 'postal code', 'Zip', 'ZIP', 'PostalCode', 'Postal Code'],
-    'countryPersonal': ['CountryPersonal', 'Country Personal', 'Country_Personal', 'countrypersonal', 'personal country', 'country', 'Country', 'COUNTRY'],
-    
-    // Work Information
-    'company': ['Company', 'company', 'employer', 'Employer', 'COMPANY', 'Organization'],
-    'department': ['Department', 'department', 'dept', 'Dept', 'DEPARTMENT'],
-    'designation': ['Designation', 'designation', 'title', 'Title', 'Job Title', 'JobTitle', 'DESIGNATION'],
-    'role': ['Role', 'role', 'position', 'Position', 'ROLE'],
-    'phoneWork': ['PhoneWork', 'Phone Work', 'Phone_Work', 'phonework', 'work phone', 'workphone', 'WorkPhone', 'WORK_PHONE', 'Office Phone'],
-    'emailWork': ['EmailWork', 'Email Work', 'Email_Work', 'emailwork', 'work email', 'work email', 'WorkEmail', 'WORK_EMAIL', 'Office Email'],
-    'street1Work': ['Street1Work', 'Street 1 Work', 'Street1 Work', 'street1work', 'work street1', 'work address1', 'WorkAddress1', 'Work Street1'],
-    'street2Work': ['Street2Work', 'Street 2 Work', 'Street2 Work', 'street2work', 'work street2', 'work address2', 'WorkAddress2', 'Work Street2'],
-    'cityWork': ['CityWork', 'City Work', 'City_Work', 'citywork', 'work city', 'WorkCity'],
-    'zipWork': ['ZipWork', 'ZIP Work', 'Zip_Work', 'zipwork', 'work zip', 'work postal code', 'WorkZip'],
-    'countryWork': ['CountryWork', 'Country Work', 'Country_Work', 'countrywork', 'work country', 'WorkCountry'],
-    'webAddress': ['WebAddress', 'Web Address', 'Web_Address', 'webaddress', 'website', 'Website', 'URL', 'Web'],
-    
-    // Instant Messaging
-    'whatsapp': ['WhatsApp', 'Whatsapp', 'whatsapp', 'WA', 'WHATSAPP'],
-    'waBusiness': ['WABusiness', 'WA Business', 'WA_Business', 'wabusiness', 'whatsapp business', 'WhatsApp Business'],
-    'imo': ['Imo', 'imo', 'IMO'],
-    'viber': ['Viber', 'viber', 'VIBER'],
-    'twitter': ['Twitter', 'twitter', 'TWITTER'],
-    'messenger': ['Messenger', 'messenger', 'fb messenger', 'Facebook Messenger'],
-    'wechat': ['WeChat', 'Wechat', 'wechat', 'WECHAT'],
-    'telegram': ['Telegram', 'telegram', 'TELEGRAM'],
-    'snapchat': ['Snapchat', 'snapchat', 'SNAPCHAT'],
-    
-    // Social Media
-    'facebook': ['Facebook', 'facebook', 'fb', 'FACEBOOK'],
-    'linkedin': ['LinkedIn', 'Linkedin', 'linkedin', 'LINKEDIN'],
-    'instagram': ['Instagram', 'instagram', 'insta', 'INSTAGRAM'],
-    'youtube': ['YouTube', 'Youtube', 'youtube', 'yt', 'YOUTUBE'],
-    'fiverr': ['Fiverr', 'fiverr', 'FIVERR'],
-    'upwork': ['Upwork', 'upwork', 'UPWORK'],
-    'freelancer': ['Freelancer', 'freelancer', 'FREELANCER']
-};
+            // Personal Information
+            'firstName': ['FirstName', 'First Name', 'First_Name', 'firstname', 'first name', 'fname'],
+            'middleName': ['MiddleName', 'Middle Name', 'Middle_Name', 'middlename', 'middle name', 'mname'],
+            'lastName': ['LastName', 'Last Name', 'Last_Name', 'lastname', 'last name', 'lname'],
+            'nickName': ['NickName', 'Nick Name', 'Nick_Name', 'nickname', 'nick name', 'nick'],
+            'phoneHome': ['PhoneHome', 'Phone Home', 'Phone_Home', 'phonehome', 'home phone', 'homephone'],
+            'phoneMobile': ['PhoneMobile', 'Phone Mobile', 'Phone_Mobile', 'phonemobile', 'mobile phone', 'mobile', 'cell', 'cellphone'],
+            'emailPersonal': ['EmailPersonal', 'Email Personal', 'Email_Personal', 'emailpersonal', 'personal email', 'email'],
+            'dob': ['DateOfBirth', 'Date of Birth', 'Date_of_Birth', 'dob', 'birthdate', 'birth date'],
+            'street1Personal': ['Street1Personal', 'Street 1 Personal', 'Street1 Personal', 'street1personal', 'personal street1', 'address1'],
+            'street2Personal': ['Street2Personal', 'Street 2 Personal', 'Street2 Personal', 'street2personal', 'personal street2', 'address2'],
+            'cityPersonal': ['CityPersonal', 'City Personal', 'City_Personal', 'citypersonal', 'personal city', 'city'],
+            'zipPersonal': ['ZipPersonal', 'ZIP Personal', 'Zip_Personal', 'zippersonal', 'personal zip', 'zip', 'postal code'],
+            'countryPersonal': ['CountryPersonal', 'Country Personal', 'Country_Personal', 'countrypersonal', 'personal country', 'country'],
+            
+            // Work Information
+            'company': ['Company', 'company', 'employer', 'Employer'],
+            'department': ['Department', 'department', 'dept', 'Dept'],
+            'designation': ['Designation', 'designation', 'title', 'Title', 'job title'],
+            'role': ['Role', 'role', 'position', 'Position'],
+            'phoneWork': ['PhoneWork', 'Phone Work', 'Phone_Work', 'phonework', 'work phone', 'workphone'],
+            'emailWork': ['EmailWork', 'Email Work', 'Email_Work', 'emailwork', 'work email', 'work email'],
+            'street1Work': ['Street1Work', 'Street 1 Work', 'Street1 Work', 'street1work', 'work street1', 'work address1'],
+            'street2Work': ['Street2Work', 'Street 2 Work', 'Street2 Work', 'street2work', 'work street2', 'work address2'],
+            'cityWork': ['CityWork', 'City Work', 'City_Work', 'citywork', 'work city'],
+            'zipWork': ['ZipWork', 'ZIP Work', 'Zip_Work', 'zipwork', 'work zip', 'work postal code'],
+            'countryWork': ['CountryWork', 'Country Work', 'Country_Work', 'countrywork', 'work country'],
+            'webAddress': ['WebAddress', 'Web Address', 'Web_Address', 'webaddress', 'website', 'Website'],
+            
+            // Instant Messaging
+            'whatsapp': ['WhatsApp', 'Whatsapp', 'whatsapp', 'WA'],
+            'waBusiness': ['WABusiness', 'WA Business', 'WA_Business', 'wabusiness', 'whatsapp business'],
+            'imo': ['Imo', 'imo', 'IMO'],
+            'viber': ['Viber', 'viber'],
+            'twitter': ['Twitter', 'twitter'],
+            'messenger': ['Messenger', 'messenger', 'fb messenger'],
+            'wechat': ['WeChat', 'Wechat', 'wechat'],
+            'telegram': ['Telegram', 'telegram'],
+            'snapchat': ['Snapchat', 'snapchat'],
+            
+            // Social Media
+            'facebook': ['Facebook', 'facebook', 'fb'],
+            'linkedin': ['LinkedIn', 'Linkedin', 'linkedin'],
+            'instagram': ['Instagram', 'instagram', 'insta'],
+            'youtube': ['YouTube', 'Youtube', 'youtube', 'yt'],
+            'fiverr': ['Fiverr', 'fiverr'],
+            'upwork': ['Upwork', 'upwork'],
+            'freelancer': ['Freelancer', 'freelancer']
+        };
         
         // Initialize the application
-       // IMPROVED function to find field value in record using multiple possible field names
-function findFieldValue(record, fieldKey) {
-    const possibleNames = fieldMappings[fieldKey];
-    if (!possibleNames) {
-        console.log(`No mapping found for field: ${fieldKey}`);
-        return '';
-    }
-    
-    // First, try exact matches with case insensitivity
-    for (const name of possibleNames) {
-        // Check if the field exists in the record (case insensitive)
-        const recordKeys = Object.keys(record);
-        const matchingKey = recordKeys.find(key => 
-            key.toLowerCase().replace(/\s+/g, '') === name.toLowerCase().replace(/\s+/g, '')
-        );
-        
-        if (matchingKey && record[matchingKey] !== null && record[matchingKey] !== undefined && record[matchingKey] !== '') {
-            console.log(`Found field ${fieldKey} as "${matchingKey}": ${record[matchingKey]}`);
-            return record[matchingKey];
-        }
-    }
-    
-    // If no exact match, try partial matching
-    for (const name of possibleNames) {
-        const normalizedName = name.toLowerCase().replace(/\s+/g, '');
-        const recordKeys = Object.keys(record);
-        const matchingKey = recordKeys.find(key => 
-            key.toLowerCase().replace(/\s+/g, '').includes(normalizedName) || 
-            normalizedName.includes(key.toLowerCase().replace(/\s+/g, ''))
-        );
-        
-        if (matchingKey && record[matchingKey] !== null && record[matchingKey] !== undefined && record[matchingKey] !== '') {
-            console.log(`Found field ${fieldKey} as partial match "${matchingKey}": ${record[matchingKey]}`);
-            return record[matchingKey];
-        }
-    }
-    
-    console.log(`Field not found: ${fieldKey}`);
-    return '';
-}
-
-// IMPROVED function to fetch data from uploaded file
-function fetchDataFromFile() {
-    const id = contactId.value.trim();
-    if (!id) {
-        alert('Please enter a Contact ID');
-        return;
-    }
-    
-    if (uploadedData.length === 0) {
-        alert('No data available. Please upload a file first.');
-        return;
-    }
-    
-    console.log('Looking for ID:', id);
-    console.log('Available data headers:', fileHeaders);
-    console.log('First record:', uploadedData[0]);
-    
-    // Find record by ID using multiple possible ID field names
-    let record = null;
-    const idFields = fieldMappings.id;
-    
-    for (const recordItem of uploadedData) {
-        for (const idField of idFields) {
-            // Case insensitive search for ID field
-            const recordKeys = Object.keys(recordItem);
-            const matchingKey = recordKeys.find(key => 
-                key.toLowerCase().replace(/\s+/g, '') === idField.toLowerCase().replace(/\s+/g, '')
-            );
+        function initApp() {
+            // Populate country dropdowns
+            populateCountries();
             
-            if (matchingKey && recordItem[matchingKey] && recordItem[matchingKey].toString().trim() === id.toString().trim()) {
-                record = recordItem;
-                console.log('Found record with ID field:', matchingKey, record);
-                break;
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn) {
+                showApp();
+            } else {
+                showAuth();
+            }
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Set up scroll buttons
+            setupScrollButtons();
+        }
+        
+        // Populate country dropdowns
+        function populateCountries() {
+            countries.forEach(country => {
+                const option1 = document.createElement('option');
+                option1.value = country;
+                option1.textContent = country;
+                countryPersonal.appendChild(option1);
+                
+                const option2 = document.createElement('option');
+                option2.value = country;
+                option2.textContent = country;
+                countryWork.appendChild(option2);
+            });
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Auth forms
+            signinForm.addEventListener('submit', handleSignIn);
+            signupForm.addEventListener('submit', handleSignUp);
+            logoutBtn.addEventListener('click', handleLogout);
+            
+            // File upload
+            uploadBtn.addEventListener('click', handleFileUpload);
+            downloadTemplateBtn.addEventListener('click', downloadTemplate);
+            
+            // Image preview
+            imageUpload.addEventListener('change', handleImagePreview);
+            
+            // ID controls
+            increaseIdBtn.addEventListener('click', () => changeId(1));
+            decreaseIdBtn.addEventListener('click', () => changeId(-1));
+            
+            // Fetch data from file
+            fetchDataBtn.addEventListener('click', fetchDataFromFile);
+            
+            // Contact form
+            contactForm.addEventListener('submit', handleFormSubmit);
+            
+            // Download buttons - FIXED QR CODE BUTTON
+            downloadCsvBtn.addEventListener('click', downloadCsv);
+            downloadVcfBtn.addEventListener('click', downloadVcf);
+            downloadQrBtn.addEventListener('click', generateAndDisplayQrCode);
+            saveQrBtn.addEventListener('click', downloadQrCodeImage);
+            
+            // Payment
+            paymentBtn.addEventListener('click', showPaymentModal);
+            cancelPaymentBtn.addEventListener('click', hidePaymentModal);
+            confirmPaymentBtn.addEventListener('click', processPayment);
+        }
+        
+        // Set up scroll buttons
+        function setupScrollButtons() {
+            // Show/hide scroll buttons based on scroll position
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.style.display = 'flex';
+                } else {
+                    scrollToTopBtn.style.display = 'none';
+                }
+                
+                // Show bottom button when not at bottom
+                const bottom = Math.ceil(window.innerHeight + window.pageYOffset) >= document.documentElement.scrollHeight;
+                scrollToBottomBtn.style.display = bottom ? 'none' : 'flex';
+            });
+            
+            // Scroll to top
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Scroll to bottom
+            scrollToBottomBtn.addEventListener('click', function() {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            });
+        }
+        
+        // Authentication functions
+        function handleSignIn(e) {
+            e.preventDefault();
+            const email = document.getElementById('signinEmail').value;
+            const password = document.getElementById('signinPassword').value;
+            
+            // Simple validation
+            if (email && password) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', email);
+                showApp();
+            } else {
+                alert('Please enter both email and password');
             }
         }
-        if (record) break;
-    }
-    
-    if (!record) {
-        alert(`No record found with ID: ${id}. Available IDs: ${uploadedData.map(r => {
+        
+        function handleSignUp(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Simple validation
+            if (name && email && password && confirmPassword) {
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userName', name);
+                showApp();
+            } else {
+                alert('Please fill all fields');
+            }
+        }
+        
+        function handleLogout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userName');
+            showAuth();
+        }
+        
+        function showAuth() {
+            authContainer.style.display = 'block';
+            appContainer.style.display = 'none';
+        }
+        
+        function showApp() {
+            authContainer.style.display = 'none';
+            appContainer.style.display = 'block';
+            
+            // Show welcome message if available
+            const userName = localStorage.getItem('userName');
+            if (userName) {
+                document.querySelector('h1').textContent = `Welcome, ${userName}`;
+            }
+        }
+        
+        // File upload handling
+        function handleFileUpload() {
+            const file = fileUpload.files[0];
+            if (!file) {
+                uploadStatus.innerHTML = '<div class="alert alert-warning">Please select a file</div>';
+                return;
+            }
+            
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            
+            if (fileExtension === 'csv') {
+                parseCSV(file);
+            } else if (fileExtension === 'xlsx' || fileExtension === 'xls') {
+                parseExcel(file);
+            } else {
+                uploadStatus.innerHTML = '<div class="alert alert-danger">Please select a CSV or Excel file</div>';
+            }
+        }
+        
+        function parseCSV(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const lines = content.split('\n');
+                fileHeaders = lines[0].split(',').map(header => header.trim());
+                
+                uploadedData = [];
+                for (let i = 1; i < lines.length; i++) {
+                    if (lines[i].trim() === '') continue;
+                    
+                    const values = lines[i].split(',').map(value => value.trim());
+                    const entry = {};
+                    
+                    fileHeaders.forEach((header, index) => {
+                        entry[header] = values[index] || '';
+                    });
+                    
+                    uploadedData.push(entry);
+                }
+                
+                uploadStatus.innerHTML = `<div class="alert alert-success">File uploaded successfully! ${uploadedData.length} records loaded.</div>`;
+                showFileInfo(file.name, fileHeaders);
+            };
+            reader.readAsText(file);
+        }
+        
+        function parseExcel(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                
+                // Get the first sheet
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                
+                // Extract headers (first row)
+                fileHeaders = jsonData[0] || [];
+                
+                // Convert to array of objects
+                uploadedData = [];
+                for (let i = 1; i < jsonData.length; i++) {
+                    if (jsonData[i].length === 0) continue;
+                    
+                    const entry = {};
+                    fileHeaders.forEach((header, index) => {
+                        entry[header] = jsonData[i][index] || '';
+                    });
+                    
+                    uploadedData.push(entry);
+                }
+                
+                uploadStatus.innerHTML = `<div class="alert alert-success">File uploaded successfully! ${uploadedData.length} records loaded from sheet "${firstSheetName}".</div>`;
+                showFileInfo(file.name, fileHeaders, firstSheetName);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+        
+        function showFileInfo(fileName, headers, sheetName = null) {
+            fileInfo.style.display = 'block';
+            let infoHtml = `<p><strong>File:</strong> ${fileName}</p>`;
+            if (sheetName) {
+                infoHtml += `<p><strong>Sheet:</strong> ${sheetName}</p>`;
+            }
+            infoHtml += `<p><strong>Available Fields:</strong> ${headers.join(', ')}</p>`;
+            fileDetails.innerHTML = infoHtml;
+        }
+        
+        // Download template file
+        function downloadTemplate() {
+            // Create CSV template content with column-wise format
+            let csvContent = "ID,FirstName,MiddleName,LastName,NickName,PhoneHome,PhoneMobile,EmailPersonal,DateOfBirth,Street1Personal,Street2Personal,CityPersonal,ZipPersonal,CountryPersonal,Company,Department,Designation,Role,PhoneWork,EmailWork,Street1Work,Street2Work,CityWork,ZipWork,CountryWork,WebAddress,WhatsApp,WABusiness,Imo,Viber,Twitter,Messenger,WeChat,Telegram,Snapchat,Facebook,LinkedIn,Instagram,YouTube,Fiverr,Upwork,Freelancer\n";
+            csvContent += "1,John,,Doe,Johnny,1234567890,9876543210,john.doe@example.com,15-Mar,123 Main St,,New York,10001,United States,ABC Corp,Engineering,Software Engineer,Developer,0987654321,john.doe@abccorp.com,456 Business Ave,,New York,10002,United States,https://abccorp.com,1234567890,0987654321,1122334455,2233445566,johndoe,johndoe,johndoe,johndoe,johndoe,https://facebook.com/johndoe,https://linkedin.com/in/johndoe,https://instagram.com/johndoe,https://youtube.com/johndoe,https://fiverr.com/johndoe,https://upwork.com/johndoe,https://freelancer.com/johndoe\n";
+            
+            // Create and download file
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'contact_template.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Image preview
+        function handleImagePreview() {
+            const file = imageUpload.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageBase64 = e.target.result;
+                    imagePreview.src = imageBase64;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // ID increment/decrement
+        function changeId(delta) {
+            let currentId = parseInt(contactId.value) || 0;
+            currentId += delta;
+            if (currentId < 1) currentId = 1;
+            contactId.value = currentId;
+        }
+        
+        // Find field value in record using multiple possible field names - FIXED VERSION
+        function findFieldValue(record, fieldKey) {
+            const possibleNames = fieldMappings[fieldKey];
+            if (!possibleNames) {
+                console.log(`No mapping found for field: ${fieldKey}`);
+                return '';
+            }
+            
+            for (const name of possibleNames) {
+                // Check if the field exists in the record and has a value
+                if (record.hasOwnProperty(name) && record[name] !== null && record[name] !== undefined && record[name] !== '') {
+                    console.log(`Found field ${fieldKey} as ${name}: ${record[name]}`);
+                    return record[name];
+                }
+            }
+            
+            console.log(`Field not found: ${fieldKey}`);
+            return '';
+        }
+        
+        // Format date of birth
+        function formatDateOfBirth(dobValue) {
+            if (!dobValue) return '';
+            
+            // Check if it's in DD-MM-YYYY format
+            const ddMMyyyyRegex = /^(\d{1,2})-(\d{1,2})-(\d{4})$/;
+            const ddMMyyRegex = /^(\d{1,2})-(\d{1,2})-(\d{2})$/;
+            const ddMMMRegex = /^(\d{1,2})-([A-Za-z]{3})$/i;
+            
+            let match;
+            
+            if ((match = dobValue.match(ddMMyyyyRegex))) {
+                const day = match[1].padStart(2, '0');
+                const month = match[2].padStart(2, '0');
+                const year = match[3];
+                return `${day}-${month}-${year}`;
+            } else if ((match = dobValue.match(ddMMyyRegex))) {
+                const day = match[1].padStart(2, '0');
+                const month = match[2].padStart(2, '0');
+                const year = '20' + match[3]; // Assuming 20xx for 2-digit years
+                return `${day}-${month}-${year}`;
+            } else if ((match = dobValue.match(ddMMMRegex))) {
+                const day = match[1].padStart(2, '0');
+                const month = match[2].toUpperCase();
+                return `${day}-${month}`;
+            }
+            
+            // Return as is if no match
+            return dobValue;
+        }
+        
+        // Fetch data from uploaded file - FIXED VERSION
+        function fetchDataFromFile() {
+            const id = contactId.value.trim();
+            if (!id) {
+                alert('Please enter a Contact ID');
+                return;
+            }
+            
+            if (uploadedData.length === 0) {
+                alert('No data available. Please upload a file first.');
+                return;
+            }
+            
+            console.log('Looking for ID:', id);
+            console.log('Available data:', uploadedData);
+            
+            // Find record by ID using multiple possible ID field names
+            let record = null;
             const idFields = fieldMappings.id;
-            for (const idField of idFields) {
-                const recordKeys = Object.keys(r);
-                const matchingKey = recordKeys.find(key => 
-                    key.toLowerCase().replace(/\s+/g, '') === idField.toLowerCase().replace(/\s+/g, '')
-                );
-                if (matchingKey && r[matchingKey]) return r[matchingKey];
+            
+            for (const recordItem of uploadedData) {
+                for (const idField of idFields) {
+                    if (recordItem[idField] && recordItem[idField].toString().trim() === id.toString().trim()) {
+                        record = recordItem;
+                        console.log('Found record:', record);
+                        break;
+                    }
+                }
+                if (record) break;
             }
-            return 'Unknown';
-        }).join(', ')}`);
-        return;
-    }
-    
-    // Clear all form fields first to avoid data mixing
-    const form = document.getElementById('contactForm');
-    const inputs = form.querySelectorAll('input, select');
-    inputs.forEach(input => {
-        if (input.type !== 'file' && input.id !== 'contactId') {
-            input.value = '';
+            
+            if (!record) {
+                alert(`No record found with ID: ${id}`);
+                return;
+            }
+            
+            // Populate form with record data using field mapping
+            document.getElementById('firstName').value = findFieldValue(record, 'firstName');
+            document.getElementById('middleName').value = findFieldValue(record, 'middleName');
+            document.getElementById('lastName').value = findFieldValue(record, 'lastName');
+            document.getElementById('nickName').value = findFieldValue(record, 'nickName');
+            document.getElementById('phoneHome').value = findFieldValue(record, 'phoneHome');
+            document.getElementById('phoneMobile').value = findFieldValue(record, 'phoneMobile');
+            document.getElementById('emailPersonal').value = findFieldValue(record, 'emailPersonal');
+            
+            // Format date of birth
+            const dobValue = findFieldValue(record, 'dob');
+            document.getElementById('dob').value = formatDateOfBirth(dobValue);
+            
+            document.getElementById('street1Personal').value = findFieldValue(record, 'street1Personal');
+            document.getElementById('street2Personal').value = findFieldValue(record, 'street2Personal');
+            document.getElementById('cityPersonal').value = findFieldValue(record, 'cityPersonal');
+            document.getElementById('zipPersonal').value = findFieldValue(record, 'zipPersonal');
+            document.getElementById('countryPersonal').value = findFieldValue(record, 'countryPersonal');
+            
+            document.getElementById('company').value = findFieldValue(record, 'company');
+            document.getElementById('department').value = findFieldValue(record, 'department');
+            document.getElementById('designation').value = findFieldValue(record, 'designation');
+            document.getElementById('role').value = findFieldValue(record, 'role');
+            document.getElementById('phoneWork').value = findFieldValue(record, 'phoneWork');
+            document.getElementById('emailWork').value = findFieldValue(record, 'emailWork');
+            document.getElementById('street1Work').value = findFieldValue(record, 'street1Work');
+            document.getElementById('street2Work').value = findFieldValue(record, 'street2Work');
+            document.getElementById('cityWork').value = findFieldValue(record, 'cityWork');
+            document.getElementById('zipWork').value = findFieldValue(record, 'zipWork');
+            document.getElementById('countryWork').value = findFieldValue(record, 'countryWork');
+            document.getElementById('webAddress').value = findFieldValue(record, 'webAddress');
+            
+            // Social media and instant messaging
+            document.getElementById('whatsapp').value = findFieldValue(record, 'whatsapp');
+            document.getElementById('waBusiness').value = findFieldValue(record, 'waBusiness');
+            document.getElementById('imo').value = findFieldValue(record, 'imo');
+            document.getElementById('viber').value = findFieldValue(record, 'viber');
+            document.getElementById('twitter').value = findFieldValue(record, 'twitter');
+            document.getElementById('messenger').value = findFieldValue(record, 'messenger');
+            document.getElementById('wechat').value = findFieldValue(record, 'wechat');
+            document.getElementById('telegram').value = findFieldValue(record, 'telegram');
+            document.getElementById('snapchat').value = findFieldValue(record, 'snapchat');
+            document.getElementById('facebook').value = findFieldValue(record, 'facebook');
+            document.getElementById('linkedin').value = findFieldValue(record, 'linkedin');
+            document.getElementById('instagram').value = findFieldValue(record, 'instagram');
+            document.getElementById('youtube').value = findFieldValue(record, 'youtube');
+            document.getElementById('fiverr').value = findFieldValue(record, 'fiverr');
+            document.getElementById('upwork').value = findFieldValue(record, 'upwork');
+            document.getElementById('freelancer').value = findFieldValue(record, 'freelancer');
+            
+            alert('Data fetched successfully!');
         }
-    });
-    
-    // Populate form with record data using improved field mapping
-    document.getElementById('firstName').value = findFieldValue(record, 'firstName') || '';
-    document.getElementById('middleName').value = findFieldValue(record, 'middleName') || '';
-    document.getElementById('lastName').value = findFieldValue(record, 'lastName') || '';
-    document.getElementById('nickName').value = findFieldValue(record, 'nickName') || '';
-    document.getElementById('phoneHome').value = findFieldValue(record, 'phoneHome') || '';
-    document.getElementById('phoneMobile').value = findFieldValue(record, 'phoneMobile') || '';
-    document.getElementById('emailPersonal').value = findFieldValue(record, 'emailPersonal') || '';
-    
-    // Format date of birth
-    const dobValue = findFieldValue(record, 'dob');
-    document.getElementById('dob').value = formatDateOfBirth(dobValue) || '';
-    
-    document.getElementById('street1Personal').value = findFieldValue(record, 'street1Personal') || '';
-    document.getElementById('street2Personal').value = findFieldValue(record, 'street2Personal') || '';
-    document.getElementById('cityPersonal').value = findFieldValue(record, 'cityPersonal') || '';
-    document.getElementById('zipPersonal').value = findFieldValue(record, 'zipPersonal') || '';
-    document.getElementById('countryPersonal').value = findFieldValue(record, 'countryPersonal') || '';
-    
-    document.getElementById('company').value = findFieldValue(record, 'company') || '';
-    document.getElementById('department').value = findFieldValue(record, 'department') || '';
-    document.getElementById('designation').value = findFieldValue(record, 'designation') || '';
-    document.getElementById('role').value = findFieldValue(record, 'role') || '';
-    document.getElementById('phoneWork').value = findFieldValue(record, 'phoneWork') || '';
-    document.getElementById('emailWork').value = findFieldValue(record, 'emailWork') || '';
-    document.getElementById('street1Work').value = findFieldValue(record, 'street1Work') || '';
-    document.getElementById('street2Work').value = findFieldValue(record, 'street2Work') || '';
-    document.getElementById('cityWork').value = findFieldValue(record, 'cityWork') || '';
-    document.getElementById('zipWork').value = findFieldValue(record, 'zipWork') || '';
-    document.getElementById('countryWork').value = findFieldValue(record, 'countryWork') || '';
-    document.getElementById('webAddress').value = findFieldValue(record, 'webAddress') || '';
-    
-    // Social media and instant messaging
-    document.getElementById('whatsapp').value = findFieldValue(record, 'whatsapp') || '';
-    document.getElementById('waBusiness').value = findFieldValue(record, 'waBusiness') || '';
-    document.getElementById('imo').value = findFieldValue(record, 'imo') || '';
-    document.getElementById('viber').value = findFieldValue(record, 'viber') || '';
-    document.getElementById('twitter').value = findFieldValue(record, 'twitter') || '';
-    document.getElementById('messenger').value = findFieldValue(record, 'messenger') || '';
-    document.getElementById('wechat').value = findFieldValue(record, 'wechat') || '';
-    document.getElementById('telegram').value = findFieldValue(record, 'telegram') || '';
-    document.getElementById('snapchat').value = findFieldValue(record, 'snapchat') || '';
-    document.getElementById('facebook').value = findFieldValue(record, 'facebook') || '';
-    document.getElementById('linkedin').value = findFieldValue(record, 'linkedin') || '';
-    document.getElementById('instagram').value = findFieldValue(record, 'instagram') || '';
-    document.getElementById('youtube').value = findFieldValue(record, 'youtube') || '';
-    document.getElementById('fiverr').value = findFieldValue(record, 'fiverr') || '';
-    document.getElementById('upwork').value = findFieldValue(record, 'upwork') || '';
-    document.getElementById('freelancer').value = findFieldValue(record, 'freelancer') || '';
-    
-    alert('Data fetched successfully! Check the form fields below.');
-}
         
         // Handle form submission
         function handleFormSubmit(e) {
@@ -1246,236 +1501,173 @@ function fetchDataFromFile() {
             URL.revokeObjectURL(url);
         }
         
-        // QR Code function
-        function generateAndDisplayQrCode() {
-            if (!validateDownload()) return;
-            
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const phoneMobile = document.getElementById('phoneMobile').value;
-            
-            // Create comprehensive VCF content for QR code with ALL fields
-            let vcfContent = "BEGIN:VCARD\n";
-            vcfContent += "VERSION:3.0\n";
-            vcfContent += `FN:${firstName} ${lastName}\n`;
-            vcfContent += `N:${lastName};${firstName};;;\n`;
-            
-            // Personal Information
-            if (document.getElementById('middleName').value) {
-                vcfContent += `N:${lastName};${firstName};${document.getElementById('middleName').value};;\n`;
-            }
-            
-            if (document.getElementById('nickName').value) {
-                vcfContent += `NICKNAME:${document.getElementById('nickName').value}\n`;
-            }
-            
-            if (document.getElementById('phoneHome').value) {
-                vcfContent += `TEL;TYPE=HOME,VOICE:${document.getElementById('phoneHome').value}\n`;
-            }
-            
-            if (phoneMobile) {
-                vcfContent += `TEL;TYPE=CELL,VOICE:${phoneMobile}\n`;
-            }
-            
-            if (document.getElementById('phoneWork').value) {
-                vcfContent += `TEL;TYPE=WORK,VOICE:${document.getElementById('phoneWork').value}\n`;
-            }
-            
-            if (document.getElementById('emailPersonal').value) {
-                vcfContent += `EMAIL;TYPE=PERSONAL,INTERNET:${document.getElementById('emailPersonal').value}\n`;
-            }
-            
-            if (document.getElementById('emailWork').value) {
-                vcfContent += `EMAIL;TYPE=WORK,INTERNET:${document.getElementById('emailWork').value}\n`;
-            }
-            
-            if (document.getElementById('dob').value) {
-                vcfContent += `BDAY:${document.getElementById('dob').value}\n`;
-            }
-            
-            // Personal Address
-            const street1 = document.getElementById('street1Personal').value;
-            const street2 = document.getElementById('street2Personal').value;
-            const city = document.getElementById('cityPersonal').value;
-            const zip = document.getElementById('zipPersonal').value;
-            const country = document.getElementById('countryPersonal').value;
-            
-            if (street1 || city || zip || country) {
-                vcfContent += `ADR;TYPE=HOME:;;${street1};${city};;${zip};${country}\n`;
-            }
-            
-            // Work Information
-            if (document.getElementById('company').value) {
-                vcfContent += `ORG:${document.getElementById('company').value}\n`;
-            }
-            
-            if (document.getElementById('department').value) {
-                vcfContent += `ORG:${document.getElementById('company').value || ''};${document.getElementById('department').value}\n`;
-            }
-            
-            if (document.getElementById('designation').value) {
-                vcfContent += `TITLE:${document.getElementById('designation').value}\n`;
-            }
-            
-            if (document.getElementById('role').value) {
-                vcfContent += `ROLE:${document.getElementById('role').value}\n`;
-            }
-            
-            // Work Address
-            const workStreet1 = document.getElementById('street1Work').value;
-            const workStreet2 = document.getElementById('street2Work').value;
-            const workCity = document.getElementById('cityWork').value;
-            const workZip = document.getElementById('zipWork').value;
-            const workCountry = document.getElementById('countryWork').value;
-            
-            if (workStreet1 || workCity || workZip || workCountry) {
-                vcfContent += `ADR;TYPE=WORK:;;${workStreet1};${workCity};;${workZip};${workCountry}\n`;
-            }
-            
-            // Web and Social
-            if (document.getElementById('webAddress').value) {
-                vcfContent += `URL:${document.getElementById('webAddress').value}\n`;
-            }
-            
-            // Instant Messaging and Social Media
-            const socialProfiles = [
-                { type: 'whatsapp', value: document.getElementById('whatsapp').value },
-                { type: 'wabusiness', value: document.getElementById('waBusiness').value },
-                { type: 'imo', value: document.getElementById('imo').value },
-                { type: 'viber', value: document.getElementById('viber').value },
-                { type: 'twitter', value: document.getElementById('twitter').value },
-                { type: 'messenger', value: document.getElementById('messenger').value },
-                { type: 'wechat', value: document.getElementById('wechat').value },
-                { type: 'telegram', value: document.getElementById('telegram').value },
-                { type: 'snapchat', value: document.getElementById('snapchat').value },
-                { type: 'facebook', value: document.getElementById('facebook').value },
-                { type: 'linkedin', value: document.getElementById('linkedin').value },
-                { type: 'instagram', value: document.getElementById('instagram').value },
-                { type: 'youtube', value: document.getElementById('youtube').value },
-                { type: 'fiverr', value: document.getElementById('fiverr').value },
-                { type: 'upwork', value: document.getElementById('upwork').value },
-                { type: 'freelancer', value: document.getElementById('freelancer').value }
-            ];
-            
-            socialProfiles.forEach(profile => {
-                if (profile.value) {
-                    vcfContent += `X-SOCIALPROFILE;TYPE=${profile.type}:${profile.value}\n`;
-                }
-            });
-            
-            // Add photo if available
-            if (imageBase64) {
-                vcfContent += `PHOTO;ENCODING=B;TYPE=JPEG:${imageBase64.split(',')[1]}\n`;
-            }
-            
-            vcfContent += "END:VCARD";
-            
-            console.log('QR Code VCF Content:', vcfContent);
-            
-            // Generate QR code
-            try {
-                const qr = qrcode(0, 'M');
-                qr.addData(vcfContent);
-                qr.make();
-                
-                // Display QR code
-                const qrCodeElement = document.getElementById('qrcode');
-                qrCodeElement.innerHTML = '';
-                qrCodeElement.appendChild(qr.createImgTag(5));
-                qrCodeContainer.style.display = 'block';
-                
-                // Scroll to QR code
-                qrCodeContainer.scrollIntoView({ behavior: 'smooth' });
-                
-                alert('QR Code generated successfully!');
-            } catch (error) {
-                console.error('QR Code generation error:', error);
-                alert('Error generating QR code. Please try again.');
-            }
+        // FIXED QR CODE FUNCTION
+  
+    <script>
+/* --- Replace only the generateAndDisplayQrCode() and downloadQrCodeImage() functions with this code --- */
+
+/**
+ * Build a vCard string from form fields.
+ * @param {boolean} includePhoto - whether to include PHOTO (danger: very large)
+ * @returns {string} vCard text
+ */
+function buildVCard(includePhoto = false) {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const phoneMobile = document.getElementById('phoneMobile').value.trim();
+
+    let vcf = "BEGIN:VCARD\nVERSION:3.0\n";
+    vcf += `FN:${firstName} ${lastName}\n`;
+    vcf += `N:${lastName};${firstName};;;\n`;
+
+    if (document.getElementById('phoneHome').value) {
+        vcf += `TEL;TYPE=HOME,VOICE:${document.getElementById('phoneHome').value}\n`;
+    }
+    if (phoneMobile) {
+        vcf += `TEL;TYPE=CELL,VOICE:${phoneMobile}\n`;
+    }
+    if (document.getElementById('phoneWork').value) {
+        vcf += `TEL;TYPE=WORK,VOICE:${document.getElementById('phoneWork').value}\n`;
+    }
+
+    if (document.getElementById('emailPersonal').value) {
+        vcf += `EMAIL;TYPE=HOME,INTERNET:${document.getElementById('emailPersonal').value}\n`;
+    }
+    if (document.getElementById('emailWork').value) {
+        vcf += `EMAIL;TYPE=WORK,INTERNET:${document.getElementById('emailWork').value}\n`;
+    }
+
+    // Address (personal)
+    const street1 = document.getElementById('street1Personal').value.trim();
+    const city = document.getElementById('cityPersonal').value.trim();
+    const zip = document.getElementById('zipPersonal').value.trim();
+    const country = document.getElementById('countryPersonal').value.trim();
+    if (street1 || city || zip || country) {
+        vcf += `ADR;TYPE=HOME:;;${street1};${city};;${zip};${country}\n`;
+    }
+
+    // Work address
+    const wStreet = document.getElementById('street1Work').value.trim();
+    const wCity = document.getElementById('cityWork').value.trim();
+    const wZip = document.getElementById('zipWork').value.trim();
+    const wCountry = document.getElementById('countryWork').value.trim();
+    if (wStreet || wCity || wZip || wCountry) {
+        vcf += `ADR;TYPE=WORK:;;${wStreet};${wCity};;${wZip};${wCountry}\n`;
+    }
+
+    if (document.getElementById('company').value.trim()) {
+        vcf += `ORG:${document.getElementById('company').value.trim()}\n`;
+    }
+    if (document.getElementById('designation').value.trim()) {
+        vcf += `TITLE:${document.getElementById('designation').value.trim()}\n`;
+    }
+
+    // web & social (short)
+    if (document.getElementById('webAddress').value.trim()) {
+        vcf += `URL:${document.getElementById('webAddress').value.trim()}\n`;
+    }
+    if (document.getElementById('facebook').value.trim()) {
+        vcf += `X-SOCIALPROFILE;TYPE=facebook:${document.getElementById('facebook').value.trim()}\n`;
+    }
+    if (document.getElementById('linkedin').value.trim()) {
+        vcf += `X-SOCIALPROFILE;TYPE=linkedin:${document.getElementById('linkedin').value.trim()}\n`;
+    }
+
+    // Only include photo if explicitly allowed (danger of exceeding QR capacity)
+    if (includePhoto && imageBase64) {
+        // imageBase64 is like: data:image/jpeg;base64,/9j/4AAQ...
+        const b64 = imageBase64.split(',')[1] || '';
+        if (b64) {
+            vcf += `PHOTO;ENCODING=b;TYPE=JPEG:${b64}\n`;
         }
-        
-        function downloadQrCodeImage() {
-            const qrCodeImg = document.querySelector('#qrcode img');
-            if (!qrCodeImg) {
-                alert('Please generate a QR code first by clicking "Generate QR Code"');
-                return;
-            }
-            
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const phoneMobile = document.getElementById('phoneMobile').value;
-            
-            // Create a canvas to draw the QR code
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const img = new Image();
-            
-            img.onload = function() {
-                canvas.width = img.width;
-                canvas.height = img.height;
-                ctx.drawImage(img, 0, 0);
-                
-                // Convert canvas to image and download
-                canvas.toBlob(function(blob) {
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `${firstName}_${lastName}_${phoneMobile}_qrcode.png`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                });
-            };
-            
-            img.src = qrCodeImg.src;
+    }
+
+    vcf += "END:VCARD";
+    return vcf;
+}
+
+/**
+ * Generate & display QR code. If vCard (with photo) is too large,
+ * automatically fall back to a smaller vCard without the photo.
+ */
+function generateAndDisplayQrCode() {
+    if (!validateDownload()) return;
+
+    const qrContainer = document.getElementById('qrcode');
+    qrContainer.innerHTML = "";
+
+    // Build vCard WITHOUT photo for QR (safe path)
+    const vcardNoPhoto = buildVCard(false);
+
+    // Quick size check: typical QR max bytes (practical) ~ 1000-2000 characters depending on error correction
+    // We'll attempt with the vCard without photo first.
+    try {
+        const qr1 = qrcode(0, 'M');
+        qr1.addData(vcardNoPhoto);
+        qr1.make();
+        qrContainer.innerHTML = qr1.createImgTag(5);
+        document.getElementById('qrCodeContainer').style.display = 'block';
+        // Save the vcardNoPhoto into a data attribute so the download (if needed) can use it
+        qrContainer.setAttribute('data-vcard', vcardNoPhoto);
+        console.log('QR generated using vCard WITHOUT photo (recommended).');
+        // Friendly message if photo exists but was skipped
+        if (imageBase64) {
+            console.warn('Profile photo excluded from QR because images blow up QR capacity. Photo is still included in downloadable VCF file.');
         }
-        
-        function validateDownload() {
-            if (!document.getElementById('firstName').value || !document.getElementById('lastName').value || !document.getElementById('phoneMobile').value) {
-                alert('Please fill all required fields (First Name, Last Name, Phone Mobile) before downloading');
-                return false;
-            }
-            return true;
-        }
-        
-        // Payment functions
-        function showPaymentModal() {
-            if (!validateDownload()) return;
-            paymentModal.style.display = 'flex';
-        }
-        
-        function hidePaymentModal() {
-            paymentModal.style.display = 'none';
-        }
-        
-        function processPayment() {
-            const cardNumber = document.getElementById('cardNumber').value;
-            const expiryDate = document.getElementById('expiryDate').value;
-            const cvv = document.getElementById('cvv').value;
-            const cardholderName = document.getElementById('cardholderName').value;
-            
-            // Simple validation
-            if (!cardNumber || !expiryDate || !cvv || !cardholderName) {
-                alert('Please fill all payment details');
-                return;
-            }
-            
-            // Simulate payment processing
-            setTimeout(() => {
-                hidePaymentModal();
-                alert('Payment received! You may now download the files.');
-                
-                // Clear payment form
-                document.getElementById('cardNumber').value = '';
-                document.getElementById('expiryDate').value = '';
-                document.getElementById('cvv').value = '';
-                document.getElementById('cardholderName').value = '';
-            }, 1500);
-        }
-        
-        // Initialize the app when the page loads
-        document.addEventListener('DOMContentLoaded', initApp);
-    </script>
-</body>
+        return;
+    } catch (err) {
+        console.error('Primary QR generation failed (no-photo):', err);
+        // Fall through to try a minimal vCard (name + cell) as last resort
+    }
+
+    // As a fallback, try minimal vCard with only name + phone
+    try {
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const phoneMobile = document.getElementById('phoneMobile').value.trim();
+        const minimalVcf = `BEGIN:VCARD\nVERSION:3.0\nFN:${firstName} ${lastName}\nN:${lastName};${firstName};;;\nTEL;TYPE=CELL:${phoneMobile}\nEND:VCARD`;
+
+        const qr2 = qrcode(0, 'M');
+        qr2.addData(minimalVcf);
+        qr2.make();
+        qrContainer.innerHTML = qr2.createImgTag(6); // slightly larger module size
+        document.getElementById('qrCodeContainer').style.display = 'block';
+        qrContainer.setAttribute('data-vcard', minimalVcf);
+        alert('Full contact QR failed (likely too large). A minimal QR (name + phone) was generated instead.');
+        console.warn('Fallback minimal QR generated.');
+        return;
+    } catch (err2) {
+        console.error('Fallback minimal QR generation also failed:', err2);
+        alert('Error generating QR code. Please check the console (F12) for details.');
+    }
+}
+
+/**
+ * Download the QR code image currently shown.
+ * It uses the <img> created by the qrcode library.
+ */
+function downloadQrCodeImage() {
+    const qrImage = document.querySelector('#qrcode img');
+    if (!qrImage) {
+        alert('No QR code generated yet.');
+        return;
+    }
+    // convert data URL to download
+    const link = document.createElement('a');
+    link.href = qrImage.src;
+    link.download = 'contact_qr.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+/* Note: validateDownload() and initApp() remain unchanged and must exist in your script.
+   The code above intentionally SKIPS embedding the Base64 photo into the QR code,
+   because Base64 images are huge and will break QR generation. Keep photos in the
+   downloadable .vcf only (the app already does this).
+*/
+</script>
+    
+    
+    </body>
 </html>
